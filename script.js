@@ -517,10 +517,7 @@ $(document).ready(                                                              
         if (e.key === "Escape") {                                               //If the key you pressed is escape...
           closeHelp();                                                          //Fade out the help menu
           $("#search").focus();                                                 //Refocus on input
-        }                                                                       //Close out if statement
-        if (e.keyCode === 192) {                                                //If the key you pressed is `...
-          $("#search").focus();                                                 //Focus on input
-        }                                                                       //Close out if statement
+        }                                                                       //Close out if statement                                                                     //Close out if statement
       }                                                                         //CLOSE OUT FUNCTION
     );
 
