@@ -1,4 +1,4 @@
-//AJ's new tab page, you already know the vibes man
+//Copyright AJ Simao 2019 Version 1.0
 
 //Variables---------------------------------------------------------------------
 //Ball Control
