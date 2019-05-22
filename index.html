@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width">
+      <title>New Tab</title>
+      <link href="style.css" rel="stylesheet" type="text/css" />
+      <script src="scripts/jquery.min.js"></script>
+      <link rel="shortcut icon" type="image/png" href="images/icon16.png"/>
+      <script src="scripts/color.js"></script>
+      <link href="fonts.css" rel="stylesheet">
+   </head>
+  <script src="script.js"></script>
+  <script src="scripts/vue.js"></script>
+  <body>
+     <div id=game></div>
+     <div id=screenone>
+        <img id=stringLights src='images/stringlights.png'>
+        <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="notetaker">
+        <div id="app">
+           <div class=note v-for="itm in myList" @click="removeItem(itm)">
+              {{itm}}
+           </div>
+        </div>
+        <div id=leftcorner class=corner></div>
+        <div id=rightcorner class=corner></div>
+        <div id=wrapper></div>
+        <div id=circle class=gradientB></div>
+        <div id=counter></div>
+        <div id=timer>0</div>
+        <img id=schedule src=images/SCHEDULE.png>
+        <div id=righttrig class=trig></div>
+        <div id=lefttrig class=trig></div>
+        <div id="switchball" class="switch"></div>
+        <div id="drivebutton" class="linkbutton leftbutton">D</div>
+        <div id="aspenbutton" class="linkbutton leftbutton">X</div>
+        <div id="replbutton" class="linkbutton leftbutton">R</div>
+        <div id="switchback" class="switch"></div>
+        <img id="netflixbutton" class="rightbutton" src="images/netflixicon.png">
+        <img id="youtubebutton" class="rightbutton" src="images/youtubeicon.png">
+        <img id="gmailbutton" class="rightbutton" src="images/gmailicon.png">
+        <form method="get" action="https://www.google.com/search">
+           <input type="text" name="q" size="31" value=""autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="search">
+        </form>
+        <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="debug">
+        <div class=menutable id=chromeshortcuts>
+           <div class=xbuttons id=shortcutsx>X</div>
+           <table>
+              <tr>
+                 <th>
+                    <div class=chromeShortcutDivs><strong>Tab Shortcuts</strong></div>
+                 </th>
+              </tr>
+              <tr>
+                 <th>Open a new window</th>
+                 <th><strong>⌘ + N</strong></th>
+              </tr>
+              <tr>
+                 <th>Open a new window in Incognito mode</th>
+                 <th><strong>⌘ + Shift + N</strong></th>
+              </tr>
+              <tr>
+                 <th>Open a new tab, and jump to it</th>
+                 <th><strong>⌘ + T</strong></th>
+              </tr>
+              <tr>
+                 <th>Reopen the last closed tab, and jump to it</th>
+                 <th><strong>⌘ + Shift + T</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to the next open tab</th>
+                 <th><strong>⌘ + Option + Right arrow</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to the previous open tab</th>
+                 <th><strong>⌘ + Option + Left arrow</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to a specific tab</th>
+                 <th><strong>⌘ + 1 through ⌘ + 8</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to the last tab</th>
+                 <th><strong>⌘ + 9</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the previous page in your browsing history for the current tab</th>
+                 <th><strong>⌘ + [ or ⌘ + Left arrow</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the next page in your browsing history for the current tab</th>
+                 <th><strong>⌘ + ] or ⌘ + Right arrow</strong></th>
+              </tr>
+              <tr>
+                 <th>Closes the current tab or pop-up</th>
+                 <th><strong>⌘ + W</strong></th>
+              </tr>
+              <tr>
+                 <th>Closes the current window</th>
+                 <th><strong>⌘ + Shift + W</strong></th>
+              </tr>
+              <tr>
+                 <th>Minimize the window</th>
+                 <th><strong>⌘ + M</strong></th>
+              </tr>
+              <tr>
+                 <th>Hide Google Chrome</th>
+                 <th><strong>⌘ + H</strong></th>
+              </tr>
+              <tr>
+                 <th>Quit Google Chrome</th>
+                 <th><strong>⌘ + Q</strong></th>
+              </tr>
+              <tr>
+                 <th>
+                    <div class=chromeShortcutDivs><strong>Feature Shortcuts</strong></div>
+                 </th>
+              </tr>
+              <tr>
+                 <th>Show or hide the Bookmarks Bar</th>
+                 <th><strong>⌘ + Shift + b</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the Bookmark Manager</th>
+                 <th><strong>⌘ + Option + b</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the Settings page in a new tab</th>
+                 <th><strong>⌘ + ,</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the History page in a new tab</th>
+                 <th><strong>⌘ + y</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the Downloads page in a new tab</th>
+                 <th><strong>⌘ + Shift + j</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the Find Bar to search the current page</th>
+                 <th><strong>⌘ + f</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to the next match to your Find Bar search</th>
+                 <th><strong>⌘ + g</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to the previous match to your Find Bar search</th>
+                 <th><strong>⌘ + Shift + g</strong></th>
+              </tr>
+              <tr>
+                 <th>When Find Bar is open, search for selected text</th>
+                 <th><strong>⌘ + e</strong></th>
+              </tr>
+              <tr>
+                 <th>Open Developer Tools/Inspect</th>
+                 <th><strong>⌘ + Option + i</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the Clear Browsing Data options</th>
+                 <th><strong>⌘ + Shift + Delete</strong></th>
+              </tr>
+              <tr>
+                 <th>Log in as a different user or browse as a Guest</th>
+                 <th><strong>⌘ + Shift + m</strong></th>
+              </tr>
+              <th>
+                 <div class=chromeShortcutDivs><strong>Address Bar Shortcuts</strong></div>
+              </th>
+              <tr>
+                 <th>Search using a different search engine</th>
+                 <th><strong>Type search name + Tab</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the website in a new background tab</th>
+                 <th><strong>Type address + ⌘ + Enter</strong></th>
+              </tr>
+              <tr>
+                 <th>Jump to the address bar</th>
+                 <th><strong>⌘ + l</strong></th>
+              </tr>
+              <th>
+                 <div class=chromeShortcutDivs><strong>Address Bar Shortcuts</strong></div>
+              </th>
+              <tr>
+                 <th>Open options to print the current page</th>
+                 <th><strong>⌘ + p</strong></th>
+              </tr>
+              <tr>
+                 <th>Open options to save the current page</th>
+                 <th><strong>⌘ + s</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the Page Setup dialog</th>
+                 <th><strong>⌘ + Option + p</strong></th>
+              </tr>
+              <tr>
+                 <th>Reload your current page, ignoring cached content</th>
+                 <th><strong>⌘ + Shift + r</strong></th>
+              </tr>
+              <tr>
+                 <th>Stop the page loading</th>
+                 <th><strong>Esc</strong></th>
+              </tr>
+              <tr>
+                 <th>Browse clickable items moving forward</th>
+                 <th><strong>Tab</strong></th>
+              </tr>
+              <tr>
+                 <th>Browse clickable items moving backward</th>
+                 <th><strong>Shift + Tab</strong></th>
+              </tr>
+              <tr>
+                 <th>Open a file from your computer in Google Chrome</th>
+                 <th><strong>⌘ + o + Select a file</strong></th>
+              </tr>
+              <tr>
+                 <th>Display non-editable HTML source code for the current page</th>
+                 <th><strong>⌘ + Option + u</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the JavaScript Console</th>
+                 <th><strong>⌘ + Option + j</strong></th>
+              </tr>
+              <tr>
+                 <th>Save your current webpage as a bookmark</th>
+                 <th><strong>⌘ + d</strong></th>
+              </tr>
+              <tr>
+                 <th>Save all open tabs as bookmarks in a new folder</th>
+                 <th><strong>⌘ + Shift + d</strong></th>
+              </tr>
+              <tr>
+                 <th>Turn full-screen mode on or off</th>
+                 <th><strong>⌘ + Ctrl + f</strong></th>
+              </tr>
+              <tr>
+                 <th>Make everything on the page bigger</th>
+                 <th><strong>⌘ and +</strong></th>
+              </tr>
+              <tr>
+                 <th>Make everything on the page smaller</th>
+                 <th><strong>⌘ and -</strong></th>
+              </tr>
+              <tr>
+                 <th>Return everything on the page to the default size</th>
+                 <th><strong>⌘ + 0</strong></th>
+              </tr>
+              <tr>
+                 <th>Scroll down a webpage, a screen at a time</th>
+                 <th><strong>Space</strong></th>
+              </tr>
+              <tr>
+                 <th>Scroll up a webpage, a screen at a time</th>
+                 <th><strong>Shift + Space</strong></th>
+              </tr>
+              <tr>
+                 <th>Search the web</th>
+                 <th><strong>⌘ + Option + f</strong></th>
+              </tr>
+              <tr>
+                 <th>Move your cursor to the front of the previous word in a text field</th>
+                 <th><strong>Option + Left arrow</strong></th>
+              </tr>
+              <tr>
+                 <th>Move your cursor to the back of the next word in a text field</th>
+                 <th><strong>Option + Right arrow</strong></th>
+              </tr>
+              <tr>
+                 <th>Delete the previous word in a text field</th>
+                 <th><strong>Option + Delete</strong></th>
+              </tr>
+              <tr>
+                 <th>Open your home page in the current tab</th>
+                 <th><strong>⌘ + Shift + h</strong></th>
+              </tr>
+           </table>
+        </div>
+        <div class=menutable id=help>
+           <div class=xbuttons id=helpx>X</div>
+           <table>
+              <tr>
+                 <th>Rainbow</th>
+                 <th class = secretCode><strong>disco</strong></th>
+              </tr>
+              <tr>
+                 <th>Rainbow + Fades</th>
+                 <th class = secretCode><strong>fulldisco</strong></th>
+              </tr>
+              <tr>
+                 <th>Browser Pong</th>
+                 <th class = secretCode><strong>pong</strong></th>
+              </tr>
+              <tr>
+                 <th>X2 Aspen</th>
+                 <th class = secretCode><strong>gradee</strong></th>
+              </tr>
+              <tr>
+                 <th>Clear page</th>
+                 <th class = secretCode><strong>testemp</strong></th>
+              </tr>
+              <tr>
+                 <th>Hide search bar</th>
+                 <th class = secretCode><strong>byesearch</strong></th>
+              </tr>
+              <tr>
+                 <th>Show loading screen</th>
+                 <th class = secretCode><strong>loadd</strong></th>
+              </tr>
+              <tr>
+                 <th>Test Key values</th>
+                 <th class = secretCode><strong>whatkey</strong></th>
+              </tr>
+              <tr>
+                 <th>Debug menu to find variables</th>
+                 <th class = secretCode><strong>debug</strong></th>
+              </tr>
+              <tr>
+                 <th>Start the timer</th>
+                 <th class = secretCode><strong>timer</strong></th>
+              </tr>
+              <tr>
+                 <th>Open the schedule</th>
+                 <th class = secretCode><strong>class</strong></th>
+              </tr>
+              <tr>
+                 <th>Add a current note</th>
+                 <th class = secretCode><strong>note</strong></th>
+              </tr>
+              <tr>
+                 <th>Show all current notes</th>
+                 <th class = secretCode><strong>shownote</strong></th>
+              </tr>
+              <tr>
+                 <th>Open Prop hunt</th>
+                 <th class = secretCode><strong>prop</strong></th>
+              </tr>
+              <tr>
+                 <th>Open Javascript tutorial</th>
+                 <th class = secretCode><strong>mosh</strong></th>
+              </tr>
+              <tr>
+                 <th>Open Santander account</th>
+                 <th class = secretCode><strong>bank</strong></th>
+              </tr>
+              <tr>
+                 <th>Open Chrome shortcuts</th>
+                 <th class = secretCode><strong>tabkey</strong></th>
+              </tr>
+              <tr>
+                <th>Reset High Scores</th>
+                <th class = secretCode><strong>byescore</strong></th>
+              </tr>
+              <tr>
+                <th>Show String Lights</th>
+                <th class = secretCode><strong>lightshow</strong></th>
+              </tr>
+              <tr>
+                <th>Freeze!</th>
+                <th class = secretCode><strong>frz</strong></th>
+              </tr>
+           </table>
+        </div>
+     </div>
+     <div id="screentwo">
+        <div id=circle1 class=circlesecondscreen></div>
+        <div id=circle2 class=circlesecondscreen></div>
+     </div>
+  </body>
+</html>

@@ -1,0 +1,475 @@
+/* Background/Big Picture ----------------------------------------------------*/
+
+#wrapper {
+	width: 100%;
+	height: 100vh;
+	background: #333333;
+	z-index: -1;
+	position: absolute;
+	right: 0px;
+	top: 0px;
+}
+
+body {
+	background: #333333;
+	cursor: default;
+}
+
+.gradientB {
+	background: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.26, rgb(0, 123, 246)), to(rgb(0, 229, 254))) !important;
+}
+
+.gradientR {
+	background: -webkit-gradient(linear, 0% 100%, 0% 0%, color-stop(0.31, rgb(254, 9, 66)), to(rgb(248, 178, 159)))!important;
+}
+
+
+/* Trigger Menus -------------------------------------------------------------*/
+
+.trig {
+	display: none;
+	position: absolute;
+	z-index: 1;
+	width: 80px;
+	height: 250px;
+	bottom: 10px;
+}
+
+#righttrig {
+	right: 10px;
+}
+
+#lefttrig {
+	left: 10px;
+}
+
+
+/* Switch Buttons ------------------------------------------------------------*/
+
+.switch {
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	position: absolute;
+	bottom: 10px;
+	border-top: 185px;
+	z-index: 2;
+}
+
+#switchball {
+	background: #22bee0;
+	left: 10px;
+}
+
+#switchback {
+	background: #fffaf4;
+	right: 10px;
+}
+
+
+/* Link Buttons (No Image) ---------------------------------------------------*/
+
+.linkbutton {
+	position: absolute;
+	height: 50px;
+	width: 50px;
+	border-radius: 50%;
+	color: #fffaf4;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	text-align: center;
+	line-height: 50px;
+	font-size: 25px;
+	z-index: 3;
+}
+
+.leftbutton,
+.rightbutton {
+	display: none;
+}
+
+#drivebutton {
+	left: 10px;
+	bottom: 190px;
+	background: #1d9f5f;
+}
+
+#aspenbutton {
+	left: 10px;
+	bottom: 130px;
+	background: #79a069;
+}
+
+#replbutton {
+	left: 10px;
+	bottom: 70px;
+	background: #55b1e0;
+}
+
+
+/* Link Buttons (With Image) -------------------------------------------------*/
+
+#netflixbutton {
+	position: absolute;
+	bottom: 190px;
+	height: 52px;
+	right: 0px;
+	z-index: 3;
+}
+
+#youtubebutton {
+	position: absolute;
+	right: 10px;
+	bottom: 130px;
+	height: 51px;
+	z-index: 3;
+}
+
+#gmailbutton {
+	right: 10px;
+	bottom: 70px;
+	width: 50px;
+	position: absolute;
+	z-index: 3;
+}
+
+
+/* Help Menus ----------------------------------------------------------------*/
+
+.menutable {
+	background: rgba(255, 250, 244, .6);
+	z-index: 150;
+	position: absolute;
+	margin: auto;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	width: 90%;
+	height: 90%;
+	text-align: center;
+	padding-top: 20px;
+	display: none;
+	overflow-y: auto;
+	padding-bottom: 20px;
+}
+
+table {
+	width: inherit;
+	font-size: 260%;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+th {
+	font-weight: 200;
+}
+
+.xbuttons {
+	position: fixed;
+	left: 7%;
+	top: 5%;
+	font-size: 30px;
+	border: 2px solid #474747;
+	padding-left: 6px;
+	padding-right: 6px;
+	font-family: sans-serif;
+	opacity: 100%;
+}
+
+::-webkit-scrollbar {
+	display: none;
+}
+
+
+/* Search Bar/Counter --------------------------------------------------------*/
+
+#circle {
+	background: #22bee0;
+	height: 200px;
+	width: 200px;
+	border-radius: 50%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	z-index: 1;
+	bottom: 0px;
+	text-align: center;
+	line-height: 200px;
+	color: rgba(255, 255, 255, 0.7);
+	font-size: 30px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+}
+
+#counter {
+	color: white;
+	position: absolute;
+	top: 25px;
+	font-size: 30px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	text-align: center;
+	z-index: 2;
+	display: none;
+}
+
+#timer {
+	color: #f7c145;
+	position: absolute;
+	top: 25px;
+	font-size: 30px;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	text-align: center;
+	z-index: 2;
+	display: none;
+	text-shadow: -1px -1px 0 #333333, 1px -1px 0 #333333, -1px 1px 0 #333333, 1px 1px 0 #333333;
+}
+
+
+/* Input (Search Bar) --------------------------------------------------------*/
+
+#debug {
+	outline: none;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	color: white;
+	height: 53px;
+	width: 37.5%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	line-height: 53px;
+	font-size: 27px;
+	top: 54px;
+	background-color: #333333;
+	border: 1px solid #474747;
+	border-radius: 8px;
+	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
+	padding-left: 40px;
+	z-index: 2;
+	display: none;
+}
+
+#search {
+	outline: none;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	color: white;
+	height: 53px;
+	width: 37.5%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	line-height: 53px;
+	font-size: 27px;
+	top: 108px;
+	background-color: #333333;
+	border: 1px solid #474747;
+	border-radius: 8px;
+	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
+	padding-left: 40px;
+	z-index: 2;
+}
+
+
+/* Second Screen (Screensaver) -----------------------------------------------*/
+
+.circlesecondscreen {
+	border-radius: 50%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	margin: auto;
+}
+
+#circle1 {
+	background-color: #e04422;
+	width: 100px;
+	height: 100px;
+	animation-name: Circle1;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+}
+
+#circle2 {
+	width: 150px;
+	height: 150px;
+	border: 25px solid #22bee0;
+	animation-name: Circle2;
+	animation-duration: 5s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes Circle1 {
+	0% {
+		width: 100px;
+		height: 100px;
+	}
+	50% {
+		width: 250px;
+		height: 250px;
+	}
+	100% {
+		width: 100px;
+		height: 100px;
+	}
+}
+
+@keyframes Circle2 {
+	0% {
+		width: 150px;
+		height: 150px;
+	}
+	50% {
+		width: 300px;
+		height: 300px;
+	}
+	100% {
+		width: 150px;
+		height: 150px;
+	}
+}
+
+
+/* Corners -------------------------------------------------------------------*/
+
+.corner {
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	border-top: 2px solid #fffaf4;
+	z-index: 1;
+	top: 10px;
+}
+
+#leftcorner {
+	left: 10px;
+	border-left: 2px solid #fffaf4;
+}
+
+#rightcorner {
+	right: 10px;
+	border-right: 2px solid #fffaf4;
+}
+
+
+/* Hiding Screens ------------------------------------------------------------*/
+
+#screentwo {
+	display: none;
+}
+
+
+/* Schedule ------------------------------------------------------------------*/
+
+#schedule {
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	top: 135px;
+	width: 70%;
+	z-index: 3;
+	border-radius: 15px;
+	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
+	display: none;
+	opacity: .7;
+}
+
+
+/* Note Section --------------------------------------------------------------*/
+
+.note {
+	color: black;
+	position: relative;
+	display: inline-block;
+	width: 150px;
+	height: 150px;
+	background-color: #ff7db9;
+	margin: 20px;
+	z-index: 3;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	padding: 5px;
+	text-align: center;
+	display: none;
+	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
+	vertical-align: top;
+	word-wrap: break-word;
+	font-size: 17px;
+}
+
+#notetaker {
+	outline: none;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	color: white;
+	height: 53px;
+	width: 37.5%;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	margin: auto;
+	line-height: 53px;
+	font-size: 27px;
+	top: 54px;
+	background-color: #333333;
+	border: 1px solid #474747;
+	border-radius: 8px;
+	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
+	padding-left: 40px;
+	z-index: 3;
+	display: none;
+}
+
+
+/* Prop Hunt -----------------------------------------------------------------*/
+
+#propGame {
+	height: 600px;
+	position: absolute;
+	left: 0px;
+	right: 0px;
+	top: 0px;
+	bottom: 0px;
+	margin: auto;
+	width: 960px;
+	z-index: 3;
+	border: 3px solid #474747;
+	border-radius: 5px;
+	display: none;
+}
+
+
+/* Chrome Shortcut -----------------------------------------------------------*/
+
+.chromeShortcutDivs {
+	width: 155%;
+	display: inline-block;
+}
+
+
+/* Misc ----------------------------------------------------------------------*/
+
+#stringLights{
+    width: 100%;
+    height: 100vh;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    z-index: 1;
+		display: none;
+		filter: blur(3px);
+}
