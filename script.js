@@ -1,5 +1,4 @@
 //AJ's new tab page, you already know the vibes man
-//This is a change
 
 //Variables---------------------------------------------------------------------
 //Ball Control
