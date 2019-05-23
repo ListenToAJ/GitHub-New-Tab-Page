@@ -148,18 +148,24 @@ function saveArray(arr) {                                                       
 function freeze() {                                                             //Function for freezing browser
   while(1){}
 }                                                                               //CLOSE OUT FUNCTION
-// function tabs() {
-//   chrome.tabs.getCurrent(
-//     function (ctab){
-//       chrome.tabs.query(
-//         {windowid:ctab.windowid},
-//         function (tabs){
-//           console.log(tabs);
-//         }
-//       );
-//     }
-//   );
-// }
+function removeTabs() {                                                         //Function for removing tabs
+  chrome.tabs.getCurrent(                                                       //Hey chrome get me a list of tabs
+    function (ctab){                                                            //When you got it...
+      chrome.tabs.query(                                                        //Take a query of...
+        {windowId:ctab.windowId},                                               //All tabs in the current window
+        function (tabs){                                                        //When you got it...
+          tabs.forEach(                                                         //For each tab...
+            function(tab) {                                                     //Run a function
+              if(ctab.index > tab.index){                                       //If the tab comes before the current one
+                chrome.tabs.remove(tab.id);                                     //Remove it
+              }
+            }
+          );
+        }
+      );
+    }
+  );
+}                                                                               //CLOSE OUT FUNCTION
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
@@ -484,6 +490,11 @@ $(document).ready(                                                              
       //Code: git       Event: Open GitHub                                  Chec
       if (typedString == "git") {
         window.location = "https://github.com/"
+      }
+      //Code: tab       Event: Close all prev tabs                          Chec
+      if (typedString == "tab") {
+        removeTabs();
+        clearSearch();
       }
     }
 
