@@ -166,6 +166,13 @@ function removeTabs() {                                                         
     }
   );
 }                                                                               //CLOSE OUT FUNCTION
+function testTabs() {
+  window.open("https://www.google.com/");
+  window.open("https://www.amazon.com/");
+  window.open("https://www.innovationcharter.org/");
+  window.open("https://repl.it/repls");
+  window.open("https://github.com/")
+}
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
@@ -371,12 +378,9 @@ $(document).ready(                                                              
       if (typedString == "grade") {
         window.location = "https://ma-innovation.myfollett.com/aspen/logon.do";
       }
-      //Code: testemp   Event: Clear screen for testing                     Chec
-      if (typedString == "testemp") {
-        $("#screenone").fadeOut(500);
-        $("body").delay(500).animate({
-          backgroundColor: "#fffaf4"
-        }, 500);
+      //Code: opentab   Event: Open tabs for testing                        Chec
+      if (typedString == "opentab") {
+        testTabs();
         clearSearch();
       }
       //Code: byesearch Event: Remove search bar                            Chec
@@ -652,7 +656,6 @@ $(document).ready(                                                              
           $(".note").show().css("display","inline-block");
           setTimeout(function() {          $(".note").show().css("display","inline-block");
           },1);
-
       }
     });
 
