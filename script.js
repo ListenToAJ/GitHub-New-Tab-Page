@@ -481,6 +481,10 @@ $(document).ready(                                                              
           console.log('Not frozen');
         }
       }
+      //Code: git       Event: Open GitHub                                  Chec
+      if (typedString == "git") {
+        window.location = "https://github.com/"
+      }
     }
 
 //Secret Code running-----------------------------------------------------------
