@@ -167,12 +167,30 @@ function removeTabs() {                                                         
   );
 }                                                                               //CLOSE OUT FUNCTION
 function testTabs() {
-  window.open("https://www.google.com/");
-  window.open("https://www.amazon.com/");
-  window.open("https://www.innovationcharter.org/");
-  window.open("https://repl.it/repls");
-  window.open("https://github.com/")
+  removeTabs();
+  setTimeout(
+    function(){
+      window.open("https://www.google.com/");
+      window.open("https://www.amazon.com/");
+      window.open("https://www.innovationcharter.org/");
+      window.open("https://repl.it/repls");
+      window.open("https://github.com/");
+      chrome.tabs.create({});
+        chrome.tabs.getCurrent(                                                       //Hey chrome get me a list of tabs
+          function (ctab){                                                            //When you got it...
+            chrome.tabs.query(                                                        //Take a query of...
+              {windowId:ctab.windowId},                                               //All tabs in the current window
+              function (tabs){                                                        //When you got it...
+                var firstItem = tabs[0];
+                chrome.tabs.remove(firstItem.id);
+              }
+            );
+          }
+        );
+    }, 500
+  );
 }
+
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
