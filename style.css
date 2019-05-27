@@ -494,4 +494,8 @@ th {
     z-index: 1;
 		display: none;
 		filter: blur(3px);
+	}
+
+.recentColumn:hover{
+	color: #e72763;
 }

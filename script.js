@@ -237,7 +237,7 @@ function getLast10() {
         },
         openSite: function(num) {
           window.location = gotLast10[num-1].URL;
-        },
+        }
       }
     });
   });
