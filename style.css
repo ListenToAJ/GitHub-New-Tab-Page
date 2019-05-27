@@ -460,6 +460,28 @@ th {
 	display: inline-block;
 }
 
+/* Recent Menu ---------------------------------------------------------------*/
+.recentTable {
+	width: 100%;
+	table-layout: fixed;
+	margin-top: 60px;
+}
+
+.recentRow{
+	height: 25vh;
+}
+
+.recentColumn {
+	padding: 30px;
+	overflow-wrap: break-word;
+}
+
+#recentLabel {
+	font-size: 260%;
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 200;
+	color: #e72763;
+}
 
 /* Misc ----------------------------------------------------------------------*/
 

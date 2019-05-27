@@ -9,15 +9,16 @@
       <link rel="shortcut icon" type="image/png" href="images/icon16.png"/>
       <script src="scripts/color.js"></script>
       <link href="fonts.css" rel="stylesheet">
+      <script src="script.js"></script>
+      <script src="scripts/vue.js"></script>
    </head>
-  <script src="script.js"></script>
-  <script src="scripts/vue.js"></script>
+
   <body>
      <div id=game></div>
      <div id=screenone>
         <img id=stringLights src='images/stringlights.png'>
         <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="notetaker">
-        <div id="app">
+        <div id="notesApp">
            <div class=note v-for="itm in myList" @click="removeItem(itm)">
               {{itm}}
            </div>
@@ -44,7 +45,7 @@
         </form>
         <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="debug">
         <div class=menutable id=chromeshortcuts>
-           <div class=xbuttons id=shortcutsx>X</div>
+           <div class=xbuttons>X</div>
            <table>
               <tr>
                  <th>
@@ -277,9 +278,8 @@
            </table>
         </div>
         <div class=menutable id=help>
-           <div class=xbuttons id=helpx>X</div>
+           <div class=xbuttons>X</div>
            <table>
-
               <tr>
                  <th>Rainbow</th>
                  <th class = secretCode><strong>disco</strong></th>
@@ -346,7 +346,7 @@
               </tr>
               <tr>
                  <th>Open Chrome shortcuts</th>
-                 <th class = secretCode><strong>tabkey</strong></th>
+                 <th class = secretCode><strong>shortkey</strong></th>
               </tr>
               <tr>
                 <th>Reset High Scores</th>
@@ -368,12 +368,37 @@
                 <th>Close tabs</th>
                 <th class = secretCode><strong>tabs</strong></th>
              </tr>
+             <tr>
+               <th>Show recently closed tabs</th>
+               <th class = secretCode><strong>recent</strong></th>
            </table>
+        </div>
+        <div class=menutable id=recentlyClosedMenu>
+          <div class=xbuttons @click="closeHelp();">X</div>
+          <div id=recentLabel>Tabs of closed past...</div>
+          <table class=recentTable>
+            <tr class=recentRow>
+               <th class=recentColumn id=site1 @click="openSite(1);">{{site1Title}}</th>
+               <th class=recentColumn id=site2 @click="openSite(2);">{{site2Title}}</th>
+               <th class=recentColumn id=site3 @click="openSite(3);">{{site3Title}}</th>
+            </tr>
+            <tr class=recentRow>
+               <th class=recentColumn id=site4 @click="openSite(4);">{{site4Title}}</th>
+               <th class=recentColumn id=site5 @click="openSite(5);">{{site5Title}}</th>
+               <th class=recentColumn id=site6 @click="openSite(6);">{{site6Title}}</th>
+            </tr>
+            <tr class=recentRow>
+               <th class=recentColumn id=site7 @click="openSite(7);">{{site7Title}}</th>
+               <th class=recentColumn id=site8 @click="openSite(8);">{{site8Title}}</th>
+               <th class=recentColumn id=site9 @click="openSite(9);">{{site9Title}}</th>
+            </tr>
+          </table>
         </div>
      </div>
      <div id="screentwo">
         <div id=circle1 class=circlesecondscreen></div>
         <div id=circle2 class=circlesecondscreen></div>
      </div>
+
   </body>
 </html>

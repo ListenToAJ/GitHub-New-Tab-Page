@@ -21,6 +21,7 @@ var propState = false;                                                          
 //Misc.
 var typedString;                                                                //String to hold search bar contents
 var highScore;                                                                  //Var to hold current high score
+var gotLast10 = [];
 
 //Functions---------------------------------------------------------------------
 var ballup = function (){                                                       //Function for ballup (for click/hover)
@@ -175,12 +176,13 @@ function testTabs() {
       window.open("https://www.innovationcharter.org/");
       window.open("https://repl.it/repls");
       window.open("https://github.com/");
+      window.open("https://drive.google.com/drive/u/0/my-drive");
       chrome.tabs.create({});
-        chrome.tabs.getCurrent(                                                       //Hey chrome get me a list of tabs
-          function (ctab){                                                            //When you got it...
-            chrome.tabs.query(                                                        //Take a query of...
-              {windowId:ctab.windowId},                                               //All tabs in the current window
-              function (tabs){                                                        //When you got it...
+        chrome.tabs.getCurrent(                                                 //Hey chrome get me a list of tabs
+          function (ctab){                                                      //When you got it...
+            chrome.tabs.query(                                                  //Take a query of...
+              {windowId:ctab.windowId},                                         //All tabs in the current window
+              function (tabs){                                                  //When you got it...
                 var firstItem = tabs[0];
                 chrome.tabs.remove(firstItem.id);
               }
@@ -191,14 +193,65 @@ function testTabs() {
   );
 }
 
+function getLast10() {
+  chrome.sessions.getRecentlyClosed({}, function (results){
+    results.forEach(
+      function(eachSite) {
+        var tempObject = { TITLE: eachSite.tab.title, URL: eachSite.tab.url};
+        if(tempObject.TITLE == 'New Tab'){
+          console.log('New tab prevented');
+        }
+        else{
+          gotLast10.push(tempObject);
+        }
+      }
+    );
+    if (gotLast10.length > 9){
+      gotLast10 = gotLast10.slice(0, 9);
+    }
+    vm = new Vue({
+      el: '#recentlyClosedMenu',
+      data: {
+        site1Title: gotLast10[0].TITLE,
+        site1URL: gotLast10[0].URL,
+        site2Title: gotLast10[1].TITLE,
+        site2URL: gotLast10[1].URL,
+        site3Title: gotLast10[2].TITLE,
+        site3URL: gotLast10[2].URL,
+        site4Title: gotLast10[3].TITLE,
+        site4URL: gotLast10[3].URL,
+        site5Title: gotLast10[4].TITLE,
+        site5URL: gotLast10[4].URL,
+        site6Title: gotLast10[5].TITLE,
+        site6URL: gotLast10[5].URL,
+        site7Title: gotLast10[6].TITLE,
+        site7URL: gotLast10[6].URL,
+        site8Title: gotLast10[7].TITLE,
+        site8URL: gotLast10[7].URL,
+        site9Title: gotLast10[8].TITLE,
+        site9URL: gotLast10[8].URL
+      },
+      methods: {
+        closeHelp: function() {
+          $('.menutable').fadeOut(500);
+        },
+        openSite: function(num) {
+          window.location = gotLast10[num-1].URL;
+        },
+      }
+    });
+  });
+}
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
 saveArray(myList);
 
+
 //JQuery------------------------------------------------------------------------
 $(document).ready(                                                              //Starts up JQuery
   function() {                                                                  //Main function
+    getLast10();
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -476,8 +529,8 @@ $(document).ready(                                                              
       if (typedString == "bank") {
         window.location = "https://www.santanderbank.com/us/personal"
       }
-      //Code: tabkey    Event: Open new tab shortcuts                       Chec
-      if (typedString == "tabkey") {
+      //Code: shortket  Event: Open new tab shortcuts                       Chec
+      if (typedString == "shortkey") {
         $("#chromeshortcuts").fadeIn(500);
         setTimeout(clearSearch, 150);
       }
@@ -518,6 +571,11 @@ $(document).ready(                                                              
         removeTabs();
         clearSearch();
       }
+      //Code: recent    Event: See last 9 closed tabs                       Chec
+      if(typedString == "recent") {
+        $('#recentlyClosedMenu').fadeIn(500);
+        clearSearch();
+      }
     }
 
 //Secret Code running-----------------------------------------------------------
@@ -535,7 +593,7 @@ $(document).ready(                                                              
     );
 
 //Help Menu---------------------------------------------------------------------
-    $("#helpx").click(                                                          //When you click on the X button on the help menu
+    $(".xbuttons").click(                                                       //When you click on the X button on the help menu
       function() {                                                              //... (function)
         closeHelp();                                                            //Run closeHelp function;
       }                                                                         //CLOSE OUT FUNCTION
@@ -652,7 +710,7 @@ $(document).ready(                                                              
 
 //Notes-------------------------------------------------------------------------
     v = new Vue({
-      el: '#app',
+      el: '#notesApp',
       data: {
         myList: myList,
       },
@@ -687,14 +745,9 @@ $(document).ready(                                                              
     );
 
 //Chrome Shortcuts -------------------------------------------------------------
-    $('#shortcutsx').click(                                                     //When you click on the X
-      function() {                                                              //... (function)
-        closeHelp();                                                            //Close the help menu
-      }                                                                         //CLOSE OUT FUNCTION
-    );
     $('tr').mouseover(                                                          //When you have your mouse over a table row
       function() {                                                              //... (function)
-        $(this).css("color","darkmagenta");                                     //Make the text purple
+        $(this).css("color","#e72763");                                         //Make the text purple
       }                                                                         //CLOSE OUT FUNCTION
     );
     $('tr').mouseout(                                                           //When you have your mouse leave a table row
