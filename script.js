@@ -21,7 +21,7 @@ var propState = false;                                                          
 //Misc.
 var typedString;                                                                //String to hold search bar contents
 var highScore;                                                                  //Var to hold current high score
-var gotLast10 = [];
+var gotLast9 = [];
 
 //Functions---------------------------------------------------------------------
 var ballup = function (){                                                       //Function for ballup (for click/hover)
@@ -167,7 +167,7 @@ function removeTabs() {                                                         
     }
   );
 }                                                                               //CLOSE OUT FUNCTION
-function testTabs() {
+function testTabs() {                                                           //Function for opening tabs for testing
   removeTabs();
   setTimeout(
     function(){
@@ -191,57 +191,56 @@ function testTabs() {
         );
     }, 500
   );
-}
-
-function getLast10() {
-  chrome.sessions.getRecentlyClosed({}, function (results){
-    results.forEach(
-      function(eachSite) {
-        var tempObject = { TITLE: eachSite.tab.title, URL: eachSite.tab.url};
-        if(tempObject.TITLE == 'New Tab'){
-          console.log('New tab prevented');
-        }
-        else{
-          gotLast10.push(tempObject);
-        }
-      }
+}                                                                               //CLOSE OUT FUNCTION
+function getLast9() {                                                           //Function for getting last 9 closed tabs
+  chrome.sessions.getRecentlyClosed({}, function (results){                     //Hey chrome get my 25 last closed tabs
+    results.forEach(                                                            //For each tab you got
+      function(eachSite) {                                                      //Do the following (function)
+        var tempObject = { TITLE: eachSite.tab.title, URL: eachSite.tab.url};   //Save the title and url to a temporary object
+        if(tempObject.TITLE == 'New Tab'){                                      //If the temporary object is a new tab
+          console.log('New tab prevented');                                     //Log it in the console
+        }                                                                       //Close out if statement
+        else{                                                                   //If the temporary object is an actual page (else)
+          gotLast9.push(tempObject);                                            //Throw it on our array
+        }                                                                       //Close out else statement
+      }                                                                         //CLOSE OUT FUNCTION
     );
-    if (gotLast10.length > 9){
-      gotLast10 = gotLast10.slice(0, 9);
-    }
-    vm = new Vue({
-      el: '#recentlyClosedMenu',
-      data: {
-        site1Title: gotLast10[0].TITLE,
-        site1URL: gotLast10[0].URL,
-        site2Title: gotLast10[1].TITLE,
-        site2URL: gotLast10[1].URL,
-        site3Title: gotLast10[2].TITLE,
-        site3URL: gotLast10[2].URL,
-        site4Title: gotLast10[3].TITLE,
-        site4URL: gotLast10[3].URL,
-        site5Title: gotLast10[4].TITLE,
-        site5URL: gotLast10[4].URL,
-        site6Title: gotLast10[5].TITLE,
-        site6URL: gotLast10[5].URL,
-        site7Title: gotLast10[6].TITLE,
-        site7URL: gotLast10[6].URL,
-        site8Title: gotLast10[7].TITLE,
-        site8URL: gotLast10[7].URL,
-        site9Title: gotLast10[8].TITLE,
-        site9URL: gotLast10[8].URL
+    if (gotLast9.length > 9){                                                   //If the list is over 9 (it always is)
+      gotLast9 = gotLast9.slice(0, 9);                                          //Cut it down to only 9 websites
+    }                                                                           //Close out if statement
+    vm = new Vue({                                                              //Run a Vue app that displays these websites
+      el: '#recentlyClosedMenu',                                                //Run the app on the correct id
+      data: {                                                                   //The following are the app Variables
+        site1Title: gotLast9[0].TITLE,
+        site1URL: gotLast9[0].URL,
+        site2Title: gotLast9[1].TITLE,
+        site2URL: gotLast9[1].URL,
+        site3Title: gotLast9[2].TITLE,
+        site3URL: gotLast9[2].URL,
+        site4Title: gotLast9[3].TITLE,
+        site4URL: gotLast9[3].URL,
+        site5Title: gotLast9[4].TITLE,
+        site5URL: gotLast9[4].URL,
+        site6Title: gotLast9[5].TITLE,
+        site6URL: gotLast9[5].URL,
+        site7Title: gotLast9[6].TITLE,
+        site7URL: gotLast9[6].URL,
+        site8Title: gotLast9[7].TITLE,
+        site8URL: gotLast9[7].URL,
+        site9Title: gotLast9[8].TITLE,
+        site9URL: gotLast9[8].URL
       },
-      methods: {
+      methods: {                                                                //The following are the functions that can be run
         closeHelp: function() {
           $('.menutable').fadeOut(500);
         },
         openSite: function(num) {
-          window.location = gotLast10[num-1].URL;
+          window.location = gotLast9[num-1].URL;
         }
       }
-    });
-  });
-}
+    });                                                                         //Close out Vue
+  });                                                                           //Close out Chrome asynchronous program
+}                                                                               //CLOSE OUT FUNCTION
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
@@ -251,7 +250,7 @@ saveArray(myList);
 //JQuery------------------------------------------------------------------------
 $(document).ready(                                                              //Starts up JQuery
   function() {                                                                  //Main function
-    getLast10();
+    getLast9();                                                                 //Retrieve last 9 closed websites
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -384,7 +383,7 @@ $(document).ready(                                                              
     );
 
 //SECRET CODE SETUP-------------------------------------------------------------
-    function secretCode() {
+    function secretCode() {                                                     //Check for secret codes
       typedString = $('#search').val();
       //Code: ??        Event: Open help pop up           Not included in itself
       if (typedString == "??") {
