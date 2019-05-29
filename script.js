@@ -1,29 +1,32 @@
 //Copyright AJ Simao 2019 Version 1.0
 
-//Variables---------------------------------------------------------------------
+//Variables --------------------------------------------------------------------
 //Ball Control
 var y = 0;                                                                      //Y Position (Of boredom ball)
 var vy = 2;                                                                     //Velocity
 var ay = -.01;                                                                  //Downward Acceleration
+
 //Modes
 var ballMode = 2;                                                               //Ball mode (Red Blue)
 var backMode = 1;                                                               //Back mode (Gray Cream)
 var currentScreen = 1;                                                          //What screen your on
 var gradState = true;                                                           //Gradients are on
+
 //Numbers to hold
 var n;                                                                          //PX to number
 var w = window.innerWidth;                                                      //Width of current window
 var h = window.innerHeight;                                                     //Height of current window
+
 //Menus (Right/Left)
 var rightMenu = false;                                                          //Right trigger is hidden
 var leftMenu = false;                                                           //Left trigger is hidden
 var propState = false;                                                          //Prop game is not on
+
 //Misc.
 var typedString;                                                                //String to hold search bar contents
 var highScore;                                                                  //Var to hold current high score
-var gotLast9 = [];
 
-//Functions---------------------------------------------------------------------
+//Functions --------------------------------------------------------------------
 var ballup = function (){                                                       //Function for ballup (for click/hover)
   vy += 1.3;                                                                    //Increase Velocity
   ay = -.01;                                                                    //Reset Downward Acceleration
@@ -192,65 +195,15 @@ function testTabs() {                                                           
     }, 500
   );
 }                                                                               //CLOSE OUT FUNCTION
-function getLast9() {                                                           //Function for getting last 9 closed tabs
-  chrome.sessions.getRecentlyClosed({}, function (results){                     //Hey chrome get my 25 last closed tabs
-    results.forEach(                                                            //For each tab you got
-      function(eachSite) {                                                      //Do the following (function)
-        var tempObject = { TITLE: eachSite.tab.title, URL: eachSite.tab.url};   //Save the title and url to a temporary object
-        if(tempObject.TITLE == 'New Tab'){                                      //If the temporary object is a new tab
-          console.log('New tab prevented');                                     //Log it in the console
-        }                                                                       //Close out if statement
-        else{                                                                   //If the temporary object is an actual page (else)
-          gotLast9.push(tempObject);                                            //Throw it on our array
-        }                                                                       //Close out else statement
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    if (gotLast9.length > 9){                                                   //If the list is over 9 (it always is)
-      gotLast9 = gotLast9.slice(0, 9);                                          //Cut it down to only 9 websites
-    }                                                                           //Close out if statement
-    vm = new Vue({                                                              //Run a Vue app that displays these websites
-      el: '#recentlyClosedMenu',                                                //Run the app on the correct id
-      data: {                                                                   //The following are the app Variables
-        site1Title: gotLast9[0].TITLE,
-        site1URL: gotLast9[0].URL,
-        site2Title: gotLast9[1].TITLE,
-        site2URL: gotLast9[1].URL,
-        site3Title: gotLast9[2].TITLE,
-        site3URL: gotLast9[2].URL,
-        site4Title: gotLast9[3].TITLE,
-        site4URL: gotLast9[3].URL,
-        site5Title: gotLast9[4].TITLE,
-        site5URL: gotLast9[4].URL,
-        site6Title: gotLast9[5].TITLE,
-        site6URL: gotLast9[5].URL,
-        site7Title: gotLast9[6].TITLE,
-        site7URL: gotLast9[6].URL,
-        site8Title: gotLast9[7].TITLE,
-        site8URL: gotLast9[7].URL,
-        site9Title: gotLast9[8].TITLE,
-        site9URL: gotLast9[8].URL
-      },
-      methods: {                                                                //The following are the functions that can be run
-        closeHelp: function() {
-          $('.menutable').fadeOut(500);
-        },
-        openSite: function(num) {
-          window.location = gotLast9[num-1].URL;
-        }
-      }
-    });                                                                         //Close out Vue
-  });                                                                           //Close out Chrome asynchronous program
-}                                                                               //CLOSE OUT FUNCTION
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
 saveArray(myList);
 
 
-//JQuery------------------------------------------------------------------------
+//JQuery -----------------------------------------------------------------------
 $(document).ready(                                                              //Starts up JQuery
   function() {                                                                  //Main function
-    getLast9();                                                                 //Retrieve last 9 closed websites
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -275,7 +228,7 @@ $(document).ready(                                                              
       },1                                                                       //Run this entire function every millisecond
     );
 
-//Links/Bookmarks---------------------------------------------------------------
+//Links/Bookmarks --------------------------------------------------------------
     $("#drivebutton").click(                                                    //When you click on drive
       function() {                                                              //... (function)
         window.location = "https://drive.google.com/drive/u/0/my-drive";        //Open it
@@ -307,7 +260,7 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Color Switches----------------------------------------------------------------
+//Color Switches ---------------------------------------------------------------
     $("#switchball").click(                                                     //When you click on ball switch
       function() {                                                              //... (function)
         ballMode = ballMode + 1;                                                //Change ballMode EVEN IS BLUE / ODD IS RED
@@ -371,7 +324,7 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCITON
     );
 
-//Ballup Function Activations---------------------------------------------------
+//Ballup Function Activations --------------------------------------------------
     $("#wrapper").click(                                                        //When you click on the wrapper
       ballup                                                                    //Click uses function (ballup)
     );
@@ -382,7 +335,7 @@ $(document).ready(                                                              
       ballup                                                                    //Mouseover uses function (ballup)
     );
 
-//SECRET CODE SETUP-------------------------------------------------------------
+//SECRET CODE SETUP ------------------------------------------------------------
     function secretCode() {                                                     //Check for secret codes
       typedString = $('#search').val();
       //Code: ??        Event: Open help pop up           Not included in itself
@@ -577,21 +530,21 @@ $(document).ready(                                                              
       }
     }
 
-//Secret Code running-----------------------------------------------------------
+//Secret Code running ----------------------------------------------------------
     $("#search").keyup(                                                         //When you type in the search bar
       function() {                                                              //... (function)
           secretCode();                                                         //Check for any codewords
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Schedule----------------------------------------------------------------------
+//Schedule ---------------------------------------------------------------------
     $("#schedule").click(                                                       //When you click on the schedule
       function() {                                                              //... (function)
         $(this).fadeOut(500);                                                   //Fade out the schedule
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Help Menu---------------------------------------------------------------------
+//Help Menu --------------------------------------------------------------------
     $(".xbuttons").click(                                                       //When you click on the X button on the help menu
       function() {                                                              //... (function)
         closeHelp();                                                            //Run closeHelp function;
@@ -605,7 +558,7 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Keyboard Shortcuts------------------------------------------------------------
+//Keyboard Shortcuts -----------------------------------------------------------
     $(document).keyup(                                                          //When any key goes up
       function(e) {                                                             //... (function)
         if (e.key === "Escape") {                                               //If the key you pressed is escape...
@@ -615,21 +568,21 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Second Screen (Loading)-------------------------------------------------------
+//Second Screen (Loading) ------------------------------------------------------
     $("#screentwo").mouseover(                                                  //When you click on the second screen (Loading)
       function() {                                                              //... (function)
         location.reload();                                                      //Reload the page
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Window Dimensions-------------------------------------------------------------
+//Window Dimensions ------------------------------------------------------------
     $(window).resize(                                                           //When you resize the window
       function() {                                                              //... (function)
         GetWindowDims();                                                        //Function for grabbing and assigning window dimensions
       }                                                                         //Close out function
     );
 
-//Debug Menu--------------------------------------------------------------------
+//Debug Menu -------------------------------------------------------------------
     $("#debug").keyup(                                                          //When you type in the debug menu
       function(e) {                                                             //... (function)
         var debugString = $(this).val();                                        //Store typed text to debugString var
@@ -640,7 +593,7 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTIOn
     );
 
-//Right Button Hiding-----------------------------------------------------------
+//Right Button Hiding ----------------------------------------------------------
     $("#switchback").mouseenter(                                                //When your mouse goes over the switch back button on the right
       function() {                                                              //... (function)
         $(".rightbutton").fadeIn(500);                                          //Fade in the buttons on the right side
@@ -670,7 +623,7 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Left Button Hiding------------------------------------------------------------
+//Left Button Hiding -----------------------------------------------------------
     $("#switchball").mouseenter(                                                //When your mouse goes over the switch ball button on the left
       function() {                                                              //... (function)
         $(".leftbutton").fadeIn(500);                                           //Fade in the buttons the left side
@@ -700,15 +653,15 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Hot Corners-------------------------------------------------------------------
+//Hot Corners ------------------------------------------------------------------
     $(".corner").mouseover(                                                     //When you mouse over a hot corner...
       function() {                                                              //... (function)
         lastClosed();                                                           //Open the last closed website
       }                                                                         //CLOSE OUT FUNCTION
     );
 
-//Notes-------------------------------------------------------------------------
-    v = new Vue({
+//Notes ------------------------------------------------------------------------
+v = new Vue({
       el: '#notesApp',
       data: {
         myList: myList,
@@ -734,7 +687,7 @@ $(document).ready(                                                              
       }
     });
 
-//Prop Hunt Reload--------------------------------------------------------------
+//Prop Hunt Reload -------------------------------------------------------------
     $("#wrapper").click(                                                        //When you click outside during prop hunt
       function() {                                                              //... (function)
         if(propState == true){                                                  //If prop hunt is on
@@ -760,6 +713,35 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTION
     );
 
+//Recent Menu ------------------------------------------------------------------
+    new Vue({                                                                   //Run a Vue app that displays these websites
+      el: '#recentlyClosedMenu',                                                //Run the app on the correct id
+      data: {                                                                   //The following are the app Variables (Data)
+        gotLast9:[]                                                             //Initialize a empty array for the websites
+      },                                                                        //Close out Data
+      methods: {                                                                //The following are the functions that can be run (Methods)
+        closeHelp: function() {                                                 //When you call on closeHelp in Vue
+          $('.menutable').fadeOut(500);                                         //Fade out the help menu
+        },                                                                      //Close out method
+        openSite: function(url) {                                               //When you call on openSite & pass through a url
+          window.location = url;                                                //Open that url
+        },                                                                      //Close out method
+      },                                                                        //Close out Methods
+      created: function() {                                                     //The following function will be run when the Vue is successfully built
+        chrome.sessions.getRecentlyClosed({}, (results)=>{                      //Hey chrome get my 25 last closed tabs
+          results = results.filter(                                             //Filter out...
+            (r)=>r.tab && r.tab.title != "New Tab"                              //Anything matching new tab
+          );
+          var gotLast9 = results.map((r) => {                                   //Create a array that...
+            return{TITLE: r.tab.title, URL: r.tab.url}                          //Contains only the title and url of each object
+          });                                                                   //Close out array creation
+          if (gotLast9.length > 9){                                             //If the list is over 9 (it always is)
+            gotLast9 = gotLast9.slice(0, 9);                                    //Cut it down to only 9 websites
+          }                                                                     //Close out if statement
+          this.gotLast9 = gotLast9;                                             //Submit final array to Vue
+        });                                                                     //Close out Chrome arrow function
+      }                                                                         //CLOSE OUT FUNCTION
+    });                                                                         //Close out Vue
 //Future Development -----------------------------------------------------------
 
   }                                                                             //Close out Main Function
