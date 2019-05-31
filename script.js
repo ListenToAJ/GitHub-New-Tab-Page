@@ -59,6 +59,7 @@ function screenChange (s) {                                                     
 function GetWindowDims() {                                                      //Function for Reassigning window values
   w = window.innerWidth;                                                        //Width of current window
   h = window.innerHeight;                                                       //Height of current window
+  console.log('Width is', w, 'Height is', h);                                   //Log the new height and width
 }                                                                               //CLOSE OUT FUNCTION
 function changeGradient() {                                                     //Function for changing to gradient mode
   if(gradState == false){                                                       //If gradient mode is off
@@ -195,6 +196,12 @@ function testTabs() {                                                           
     }, 500
   );
 }                                                                               //CLOSE OUT FUNCTION
+function blurOn() {
+  $('#screenone').addClass('screenone--blur');
+}
+function blurOff() {
+  $('#screenone').removeClass('screenone--blur');
+}
 var myList = getArray()
 // myList.push('new item ' + myList.length)
 // console.log('My list is: ', myList)
@@ -228,38 +235,6 @@ $(document).ready(                                                              
       },1                                                                       //Run this entire function every millisecond
     );
 
-//Links/Bookmarks --------------------------------------------------------------
-    $("#drivebutton").click(                                                    //When you click on drive
-      function() {                                                              //... (function)
-        window.location = "https://drive.google.com/drive/u/0/my-drive";        //Open it
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#aspenbutton").click(                                                    //When you click on X2
-      function() {                                                              //... (function)
-        window.location = "https://ma-innovation.myfollett.com/aspen/logon.do"; //Open it
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#replbutton").click(                                                     //When you click on Repl
-      function() {                                                              //... (function)
-        window.location = "https://repl.it/repls";                              //Open it
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#netflixbutton").click(                                                  //When you click on Netflix
-      function() {                                                              //... (function)
-        window.location = "https://www.netflix.com/browse";                     //Open it
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#youtubebutton").click(                                                  //When you click on youtube
-      function() {                                                              //... (function)
-        window.location = "https://www.youtube.com/";                           //Open it
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#gmailbutton").click(                                                    //When you click on Gmail
-      function() {                                                              //... (function)
-        window.location = "https://mail.google.com/mail/u/0/";                  //Open it
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-
 //Color Switches ---------------------------------------------------------------
     $("#switchball").click(                                                     //When you click on ball switch
       function() {                                                              //... (function)
@@ -272,11 +247,10 @@ $(document).ready(                                                              
           $("#circle").fadeOut(500);                                            //Hide the circle
           setTimeout(                                                           //Wait 500 milliseconds
             function() {                                                        //... (function)
-              gradState = false;                                                //Gradients are off
-              $("#circle").removeClass("gradientB gradientR");                  //Turn off gradients
-              $("#circle").animate({backgroundColor:"#22bee0"});                //Make ball blue
-              $("#switchball").animate({backgroundColor:"#22bee0"});            //Make ball switch blue
+              $('#circle').removeClass("gradientR");                            //Take off red gradient
+              $("#circle").addClass("gradientB")                                //Put on blue gradient
               $("#circle").fadeIn(500);                                         //Bring circle back
+              $("#switchball").animate({backgroundColor:"#22bee0"});            //Make ball switch blue
             }, 500);                                                            //Delay
         }                                                                       //Close out if statement
         if(ballMode % 2 == 1 && gradState == false){                            //If ballMode is odd
@@ -287,12 +261,11 @@ $(document).ready(                                                              
           $("#circle").fadeOut(500);                                            //Hide the circle
           setTimeout(                                                           //Wait 500 milliseconds
             function() {                                                        //... (function)
-              gradState = false;                                                //Gradients are off
-              $("#circle").removeClass("gradientB gradientR");                  //Turn off gradients
-              $("#circle").animate({backgroundColor:"#e04422"});                //Make ball blue
-              $("#switchball").animate({backgroundColor:"#e04422"});            //Make ball switch blue
+              $('#circle').removeClass("gradientB");                            //Take off Blue gradient
+              $("#circle").addClass("gradientR")                                //Put on red gradient
               $("#circle").fadeIn(500);                                         //Bring circle back
-            }, 500);                                                            //Delay
+              $("#switchball").animate({backgroundColor:"#e04422"});            //Make ball switch blue
+            }, 500);                                                         //Delay
         }                                                                       //Close out if statement
       }                                                                         //CLOSE OUT FUNCTION
     );
@@ -397,10 +370,6 @@ $(document).ready(                                                              
       if (typedString == "pong") {
         window.location = "http://stewd.io/pong/";
       }
-      //Code: grde      Event: Open X2 aspen                                Chec
-      if (typedString == "grade") {
-        window.location = "https://ma-innovation.myfollett.com/aspen/logon.do";
-      }
       //Code: opentab   Event: Open tabs for testing                        Chec
       if (typedString == "opentab") {
         testTabs();
@@ -477,10 +446,6 @@ $(document).ready(                                                              
       if (typedString == "mosh") {
         window.location = "https://codewithmosh.com/courses/enrolled/324741"
       }
-      //Code: bank      Event: Open Santander Bank                          Chec
-      if (typedString == "bank") {
-        window.location = "https://www.santanderbank.com/us/personal"
-      }
       //Code: shortket  Event: Open new tab shortcuts                       Chec
       if (typedString == "shortkey") {
         $("#chromeshortcuts").fadeIn(500);
@@ -513,10 +478,6 @@ $(document).ready(                                                              
         else{
           console.log('Not frozen');
         }
-      }
-      //Code: git       Event: Open GitHub                                  Chec
-      if (typedString == "git") {
-        window.location = "https://github.com/"
       }
       //Code: tab       Event: Close all prev tabs                          Chec
       if (typedString == "tab") {
@@ -564,6 +525,12 @@ $(document).ready(                                                              
         if (e.key === "Escape") {                                               //If the key you pressed is escape...
           closeHelp();                                                          //Fade out the help menu
           $("#search").focus();                                                 //Refocus on input
+          $('#quickMenu').fadeOut(500);                                         //Hide the quick menu
+          setTimeout(                                                           //Wait until quick menu is gone
+            function() {                                                        //... (function)
+              blurOff();                                                        //Unblur the background
+            }, 500                                                              //Delay (500)
+          );
         }                                                                       //Close out if statement                                                                     //Close out if statement
       }                                                                         //CLOSE OUT FUNCTION
     );
@@ -593,66 +560,6 @@ $(document).ready(                                                              
       }                                                                         //CLOSE OUT FUNCTIOn
     );
 
-//Right Button Hiding ----------------------------------------------------------
-    $("#switchback").mouseenter(                                                //When your mouse goes over the switch back button on the right
-      function() {                                                              //... (function)
-        $(".rightbutton").fadeIn(500);                                          //Fade in the buttons on the right side
-        $("#righttrig").show();                                                 //Fade in the border on the right side
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $(".rightbutton, #switchback").mouseover(                                   //When your mouse goes over a right side button
-      function() {                                                              //... (function)
-        rightMenu = true;                                                       //Set rightMenu to true
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $(".rightbutton, #switchback").mouseout(                                    //When your mouse goes out of a right side button
-      function() {                                                              //... (function)
-        rightMenu = false;                                                      //Set rightMenu to false
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#righttrig").mouseout(                                                   //When you leave the border
-      function() {                                                              //... (function)
-        setTimeout(                                                             //Set a timeout
-          function() {                                                          //For the following function...
-            if(rightMenu == false){                                             //If rightMenu is false
-              $(".rightbutton").fadeOut(500);                                   //Fade out the buttons on the right side
-              $("#righttrig").hide();                                           //Fade out the border on the right side
-            }                                                                   //Close out if statement
-          }, 500                                                                //Wait 250 milliseconds after leaving the border
-        );
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-
-//Left Button Hiding -----------------------------------------------------------
-    $("#switchball").mouseenter(                                                //When your mouse goes over the switch ball button on the left
-      function() {                                                              //... (function)
-        $(".leftbutton").fadeIn(500);                                           //Fade in the buttons the left side
-        $("#lefttrig").show();                                                  //Fade in the border on the left side
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $(".leftbutton, #switchball").mouseover(                                    //When your mouse goes over a left side button
-      function() {                                                              //... (function)
-        leftMenu = true;                                                        //Set leftMenu to true
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $(".leftbutton, #switchball").mouseout(                                     //When your mouse goes out of a left side button
-      function() {                                                              //... (function)
-        leftMenu = false;                                                       //Set leftMenu to false
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $("#lefttrig").mouseout(                                                    //When you leave the border
-      function() {                                                              //... (function)
-        setTimeout(                                                             //Set a timeout
-          function() {                                                          //For the following function...
-            if(leftMenu == false){                                              //If leftMenu is false
-              $(".leftbutton").fadeOut(500);                                    //Fade out the buttons on the left sideee
-              $("#lefttrig").hide();                                            //Fade out the border on the left side
-            }                                                                   //Close out if statement
-          }, 500                                                                //Wait 250 milliseconds after leaving the border
-        );
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-
 //Hot Corners ------------------------------------------------------------------
     $(".corner").mouseover(                                                     //When you mouse over a hot corner...
       function() {                                                              //... (function)
@@ -661,7 +568,7 @@ $(document).ready(                                                              
     );
 
 //Notes ------------------------------------------------------------------------
-v = new Vue({
+    new Vue({
       el: '#notesApp',
       data: {
         myList: myList,
@@ -742,7 +649,73 @@ v = new Vue({
         });                                                                     //Close out Chrome arrow function
       }                                                                         //CLOSE OUT FUNCTION
     });                                                                         //Close out Vue
-//Future Development -----------------------------------------------------------
 
+//Quick Menu  ------------------------------------------------------------------
+    $('#search').dblclick(                                                      //When you double click on the search bar
+      function() {                                                              //... (function)
+        blurOn();                                                               //Blur the background
+        setTimeout(                                                             //Wait until background is blurred
+              function() {                                                      //... (function)
+                $('#quickMenu').fadeIn(500);                                    //Show the quick menu
+              }, 500                                                            //Delay (500)
+            );
+      }                                                                         //CLOSE OUT FUNCTION
+    );
+    $('#quickMenuCloser').click(                                                //When you click outside of the quick menu
+      function() {                                                              //... (function)
+        $('input').focus();                                                     //Focus on the search bar
+        $('#quickMenu').fadeOut(500);                                           //Hide the quick menu
+        setTimeout(                                                             //Wait until quick menu is gone
+          function() {                                                          //... (function)
+            blurOff();                                                          //Unblur the background
+          }, 500                                                                //Delay (500)
+        );
+      }                                                                         //CLOSE OUT FUNCTION
+    );
+    $('#quickIcon1').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://amazon.com/"
+      }
+    );
+    $('#quickIcon2').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://www.santanderbank.com/us/personal"
+      }
+    );
+    $('#quickIcon3').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://ma-innovation.myfollett.com/aspen/logon.do"
+      }
+    );
+    $('#quickIcon4').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://repl.it/repls"
+      }
+    );
+    $('#quickIcon5').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://github.com/"
+      }
+    );
+    $('#quickIcon6').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://mail.google.com/mail/u/0/"
+      }
+    );
+    $('#quickIcon7').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://www.youtube.com/"
+      }
+    );
+    $('#quickIcon8').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://drive.google.com/drive/u/0/my-drive"
+      }
+    );
+    $('#quickIcon9').click(                                                     //Quick icon link
+      function() {
+        window.location = "https://www.netflix.com/browse"
+      }
+    );
   }                                                                             //Close out Main Function
 );
