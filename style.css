@@ -13,6 +13,7 @@
 body {
 	background: #333333;
 	cursor: default;
+	margin: 0px;
 }
 
 .gradientB {
@@ -451,7 +452,7 @@ th {
 /* Quick Screen --------------------------------------------------------------*/
 
 #screenone {
-	height: 99vh;
+	height: 100vh;
 	transition: all 0.5s ease-out;
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateZ(0) scale(1.0, 1.0);
