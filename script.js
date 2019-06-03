@@ -326,6 +326,19 @@ $(document).ready(                                                              
         }                                                                       //Close out else statement
       }                                                                         //CLOSE OUT FUNCTION
     );
+    $(".switch").mouseover(                                                     //When you hover over a switch icon
+      function() {                                                              //... (function)
+        $(this).animate({                                                       //Animate it to...
+          bottom: '15px'                                                        //Go up 5 px
+        },150);                                                                 //In 150 milliseconds
+      }                                                                         //CLOSE OUT FUNCTION
+    ).mouseleave(                                                               //When you take your mouse out
+      function() {                                                              //... (function)
+        $(this).animate({                                                       //Animate it to...
+          bottom: '10px'                                                        //Go back down 5 px
+        },150);                                                                 //In 150 milliseconds
+      }                                                                         //CLOSE OUT FUNCTION
+    );
     $("#circle").click(                                                         //When you click on the circle
       function() {                                                              //... (function)
         changeGradient();                                                       //Click uses function (changeGradient)
