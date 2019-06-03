@@ -51,6 +51,19 @@ function clearSearch() {                                                        
 }                                                                               //CLOSE OUT FUNCTION
 function closeHelp() {                                                          //Function for closing help menu
   $(".menutable").fadeOut(500);                                                 //Fade out help menu
+  setTimeout(
+    function() {
+      $('input').focus();
+    }, 500
+  );
+}                                                                               //CLOSE OUT FUNCTION
+function closeQuick() {                                                         //Function for closing quick menu
+  $('#quickMenu').fadeOut(500);                                                 //Hide the quick menu
+  setTimeout(                                                                   //Wait until quick menu is gone
+    function() {                                                                //... (function)
+      blurOff();                                                                //Unblur the background
+    }, 500                                                                      //Delay (500)
+  );
 }                                                                               //CLOSE OUT FUNCTION
 function screenChange (s) {                                                     //Function for screen change, Input: screenChange("#screennumber");
   $("#screenone").fadeOut(500);                                                 //Screen one fade out
@@ -199,9 +212,11 @@ function testTabs() {                                                           
 }                                                                               //CLOSE OUT FUNCTION
 function blurOn() {                                                             //Function for blurring the screen
   $('#screenone').addClass('screenone--blur');
+  console.log('Blur turning on');
 }                                                                               //CLOSE OUT FUNCTION
 function blurOff() {                                                            //Function for unblurring the screen
   $('#screenone').removeClass('screenone--blur');
+  console.log('Blur turning off');
 }                                                                               //CLOSE OUT FUNCTION
 function openPane() {                                                           //Function for page load animation
   setTimeout(
@@ -223,9 +238,7 @@ function openPane() {                                                           
 
 //Notes pre-work ---------------------------------------------------------------
 var myList = getArray()                                                         //Create a var for holding notes array
-
 saveArray(myList);                                                              //Then save it for safekeeping
-
 
 //JQuery -----------------------------------------------------------------------
 $(document).ready(                                                              //Starts up JQuery
@@ -509,6 +522,16 @@ $(document).ready(                                                              
         $('#recentlyClosedMenu').fadeIn(500);
         clearSearch();
       }
+      //Code: >         Event: Open quick menu                              Chec
+      if(typedString == ">") {
+        blurOn();                                                               //Blur the background
+        setTimeout(                                                             //Wait until background is blurred
+          function() {                                                          //... (function)
+            $('#quickMenu').fadeIn(500);                                        //Show the quick menu
+          }, 500                                                                //Delay (500)
+        );
+        clearSearch();
+      }
     }
 
 //Secret Code running ----------------------------------------------------------
@@ -544,13 +567,7 @@ $(document).ready(                                                              
       function(e) {                                                             //... (function)
         if (e.key === "Escape") {                                               //If the key you pressed is escape...
           closeHelp();                                                          //Fade out the help menu
-          $("#search").focus();                                                 //Refocus on input
-          $('#quickMenu').fadeOut(500);                                         //Hide the quick menu
-          setTimeout(                                                           //Wait until quick menu is gone
-            function() {                                                        //... (function)
-              blurOff();                                                        //Unblur the background
-            }, 500                                                              //Delay (500)
-          );
+          closeQuick();                                                         //Close quick menu
         }                                                                       //Close out if statement                                                                     //Close out if statement
       }                                                                         //CLOSE OUT FUNCTION
     );
@@ -575,7 +592,7 @@ $(document).ready(                                                              
         var debugString = $(this).val();                                        //Store typed text to debugString var
         if(e.keyCode == 13){                                                    //If you click enter
           eval(debugString);                                                    //Run the typed string as code
-            clearSearch();                                                     //Clear all inputs
+            clearSearch();                                                      //Clear all inputs
         }                                                                       //Close out if statement
       }                                                                         //CLOSE OUT FUNCTIOn
     );
@@ -677,21 +694,16 @@ $(document).ready(                                                              
       function() {                                                              //... (function)
         blurOn();                                                               //Blur the background
         setTimeout(                                                             //Wait until background is blurred
-              function() {                                                      //... (function)
-                $('#quickMenu').fadeIn(500);                                    //Show the quick menu
-              }, 500                                                            //Delay (500)
-            );
+          function() {                                                          //... (function)
+            $('#quickMenu').fadeIn(500);                                        //Show the quick menu
+          }, 500                                                                //Delay (500)
+        );
       }                                                                         //CLOSE OUT FUNCTION
     );
     $('#quickMenuCloser').click(                                                //When you click outside of the quick menu
       function() {                                                              //... (function)
         $('input').focus();                                                     //Focus on the search bar
-        $('#quickMenu').fadeOut(500);                                           //Hide the quick menu
-        setTimeout(                                                             //Wait until quick menu is gone
-          function() {                                                          //... (function)
-            blurOff();                                                          //Unblur the background
-          }, 500                                                                //Delay (500)
-        );
+        closeQuick();                                                           //Close the quick menu
       }                                                                         //CLOSE OUT FUNCTION
     );
     $('#quickIcon1').click(                                                     //Quick icon link
