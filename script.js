@@ -50,12 +50,12 @@ function clearSearch() {                                                        
   $('input').blur();                                                            //Unfocuses search bar
 }                                                                               //CLOSE OUT FUNCTION
 function closeHelp() {                                                          //Function for closing help menu
-  $(".menutable").children().fadeOut(100);
+  $(".menutable").children().fadeOut(150);
   setTimeout(
     function() {
       $('.menutable').animate({
-        width: '0px'},400);
-    }, 400
+        width: '0px'},350);
+    }, 350
   );                                                                            //Fade out help menu
   setTimeout(
     function() {
@@ -354,11 +354,11 @@ $(document).ready(                                                              
       //Code: ??        Event: Open help pop up           Not included in itself
       if (typedString == "??") {
         $('#help').animate({
-          width: '90%'},400);
+          width: '90%'},350);
           setTimeout(
           	function() {
-          		$("#help").children().fadeIn(100);
-          	}, 400
+          		$("#help").children().fadeIn(150);
+          	}, 350
           );
         setTimeout(clearSearch, 150);
       }
@@ -495,11 +495,11 @@ $(document).ready(                                                              
       //Code: shortket  Event: Open new tab shortcuts                       Chec
       if (typedString == "shortkey") {
         $('#chromeshortcuts').animate({
-          width: '90%'},400);
+          width: '90%'},350);
         setTimeout(
         	function() {
-        		$("#chromeshortcuts").children().fadeIn(100);
-        	}, 400
+        		$("#chromeshortcuts").children().fadeIn(150);
+        	}, 350
         );
         setTimeout(clearSearch, 150);
       }
@@ -539,11 +539,11 @@ $(document).ready(                                                              
       //Code: recent    Event: See last 9 closed tabs                       Chec
       if(typedString == "recent") {
         $('#recentlyClosedMenu').animate({
-          width: '90%'},400);
+          width: '90%'},350);
         setTimeout(
         	function() {
-        		$("#recentlyClosedMenu").children().fadeIn(100);
-        	}, 400
+        		$("#recentlyClosedMenu").children().fadeIn(150);
+        	}, 350
         );
         clearSearch();
       }
