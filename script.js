@@ -139,16 +139,17 @@ function lastClosed() {                                                         
     }, 100                                                                      //Delay
   );
 }                                                                               //CLOSE OUT FUNCTION
-function getArray() {                                                           //Save array arr to localStorage
-  var savedArray = localStorage.getItem('myArray');
-  if (savedArray) {
-    return JSON.parse(savedArray);
-  } else {
-    return []
-  }
+function getArray() {                                                           //Function for grabbing notes array from local storage
+  var savedArray = localStorage.getItem('myArray');                             //Make a temporary var and grab the array thats stringified
+  if (savedArray) {                                                             //If it exists
+    return JSON.parse(savedArray);                                              //Re-arrayify it
+  }                                                                             //Close out if statement
+  else {                                                                        //If it doesn't exist (else)
+    return []                                                                   //Start an empty array
+  }                                                                             //Close out else statement
 }                                                                               //CLOSE OUT FUNCTION
 function saveArray(arr) {                                                       //Save array arr to localStorage
-  localStorage.setItem('myArray', JSON.stringify(arr))
+  localStorage.setItem('myArray', JSON.stringify(arr))                          //Stringify and then save all notes
 }                                                                               //CLOSE OUT FUNCTION
 function freeze() {                                                             //Function for freezing browser
   while(1){}
@@ -196,16 +197,34 @@ function testTabs() {                                                           
     }, 500
   );
 }                                                                               //CLOSE OUT FUNCTION
-function blurOn() {
+function blurOn() {                                                             //Function for blurring the screen
   $('#screenone').addClass('screenone--blur');
-}
-function blurOff() {
+}                                                                               //CLOSE OUT FUNCTION
+function blurOff() {                                                            //Function for unblurring the screen
   $('#screenone').removeClass('screenone--blur');
-}
-var myList = getArray()
-// myList.push('new item ' + myList.length)
-// console.log('My list is: ', myList)
-saveArray(myList);
+}                                                                               //CLOSE OUT FUNCTION
+function openPane() {                                                           //Function for page load animation
+  setTimeout(
+    function() {
+    $("#leftIntroPane").animate({
+       left: '-846px'
+    }, { duration: 300, queue: false });
+
+    $("#rightIntroPane").animate({
+       right: '-846px'
+    }, { duration: 300, queue: false });
+  }, 500);
+  setTimeout(
+    function() {
+      $('.introPane').hide();
+    }, 800
+  );
+}                                                                               //CLOSE OUT FUNCTION
+
+//Notes pre-work ---------------------------------------------------------------
+var myList = getArray()                                                         //Create a var for holding notes array
+
+saveArray(myList);                                                              //Then save it for safekeeping
 
 
 //JQuery -----------------------------------------------------------------------
@@ -218,6 +237,7 @@ $(document).ready(                                                              
     else{                                                                       //If String Lights are off, null, or undefined
       localStorage.setItem(stringLights, 'false');                              //Set the string light state as off
     }                                                                           //Close out else statement
+    openPane();
     setInterval(                                                                //Run the following function repeatadly (MAIN BALL CONTROL)
       function () {                                                             //... (Function)
         $('#circle').css({bottom:y});                                           //Change the bottom for Y pos
@@ -568,31 +588,33 @@ $(document).ready(                                                              
     );
 
 //Notes ------------------------------------------------------------------------
-    new Vue({
-      el: '#notesApp',
-      data: {
-        myList: myList,
-      },
-      methods: {
-        removeItem: function (itm) {
-          this.myList.splice(
-            myList.indexOf(itm), // get index of current item
-            1); // remove one
-          saveArray(this.myList)// save the array
-        }
-      }
-    });
-    $("#notetaker").on('keypress',function(e) {
-      if(e.which == 13) {
-        var currentNote  = $("#notetaker").val();
-          myList.push(currentNote);
-          saveArray(myList);
-          $("input").val('');
-          $(".note").show().css("display","inline-block");
-          setTimeout(function() {          $(".note").show().css("display","inline-block");
-          },1);
-      }
-    });
+    new Vue({                                                                   //Run a Vue app for notes
+      el: '#notesApp',                                                          //Run the app on the correct id
+      data: {                                                                   //The following are the app Variables (Data)
+        myList: myList,                                                         //My notes (retrieved from the local storage vault)
+      },                                                                        //Close out Data
+      methods: {                                                                //The following are the functions that can be run (Methods)
+        removeItem: function (itm) {                                            //When you click on a note in the app
+          this.myList.splice(                                                   //Grab the current array
+            myList.indexOf(itm),                                                //Get index of clicked item
+            1);                                                                 //Remove it
+          saveArray(this.myList)                                                //Save the array
+        }                                                                       //Close out method
+      }                                                                         //Close out methods
+    });                                                                         //Close out Vue
+    $("#notetaker").on('keypress',function(e) {                                 //When you type in the note taker input bar
+      if(e.which == 13) {                                                       //If you clicked enter...
+        var currentNote  = $("#notetaker").val();                               //Make a temporary variable that holds what you typed
+        myList.push(currentNote);                                               //Throw it on to your array of notes
+        saveArray(myList);                                                      //Save your notes list to local storage
+        $("input").val('');                                                     //Empty out the note taker input bar (to prep next note)
+        setTimeout(                                                             //Wait one millisecond, then
+          function() {                                                          //... (function)
+            $(".note").show().css("display","inline-block");                    //Refresh the shown notes
+          },1                                                                   //Delay
+        );
+      }                                                                         //Close out if statement
+    });                                                                         //CLOSE OUT FUNCTION
 
 //Prop Hunt Reload -------------------------------------------------------------
     $("#wrapper").click(                                                        //When you click outside during prop hunt

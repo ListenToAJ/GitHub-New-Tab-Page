@@ -474,13 +474,13 @@ th {
 }
 
 .quickIcons {
-	font-size: 200px;
-	height: 33vh;
-	width: 33%;
-	z-index: 5;
-	text-align: center;
-	position: relative;
-	padding-top: 20px;
+  font-size: 200px;
+  height: 25vh;
+  width: 33%;
+  z-index: 5;
+  text-align: center;
+  position: relative;
+  padding-top: 70px;
 }
 
 #quickMenuWrapper {
@@ -508,3 +508,25 @@ th {
 	height: 100vh;
 	z-index: 4;
 }
+
+/* Intro panes ---------------------------------------------------------------*/
+.introPane{
+	width: 50%;
+	height: 100vh;
+	background-color: #232323;
+	position: absolute;
+	top: 0px;
+	z-index: 999;
+}
+
+#leftIntroPane{
+	left: 0px;
+	border-right: 5px solid white;
+}
+
+#rightIntroPane{
+	right: 0px;
+	border-left: 5px solid white;
+}
+
+/* Future Development --------------------------------------------------------*/
