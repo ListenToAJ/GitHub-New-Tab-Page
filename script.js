@@ -50,7 +50,13 @@ function clearSearch() {                                                        
   $('input').blur();                                                            //Unfocuses search bar
 }                                                                               //CLOSE OUT FUNCTION
 function closeHelp() {                                                          //Function for closing help menu
-  $(".menutable").fadeOut(500);                                                 //Fade out help menu
+  $(".menutable").children().fadeOut(100);
+  setTimeout(
+    function() {
+      $('.menutable').animate({
+        width: '0px'},400);
+    }, 400
+  );                                                                            //Fade out help menu
   setTimeout(
     function() {
       $('input').focus();
@@ -58,11 +64,11 @@ function closeHelp() {                                                          
   );
 }                                                                               //CLOSE OUT FUNCTION
 function closeQuick() {                                                         //Function for closing quick menu
-  $('#quickMenu').fadeOut(500);                                                 //Hide the quick menu
+  $('#quickMenu').fadeOut(250);                                                 //Hide the quick menu
   setTimeout(                                                                   //Wait until quick menu is gone
     function() {                                                                //... (function)
       blurOff();                                                                //Unblur the background
-    }, 500                                                                      //Delay (500)
+    }, 250                                                                      //Delay (500)
   );
 }                                                                               //CLOSE OUT FUNCTION
 function screenChange (s) {                                                     //Function for screen change, Input: screenChange("#screennumber");
@@ -243,6 +249,7 @@ saveArray(myList);                                                              
 //JQuery -----------------------------------------------------------------------
 $(document).ready(                                                              //Starts up JQuery
   function() {                                                                  //Main function
+		$(".menutable").children().hide();                                          //Hide the contents of the menus
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -346,7 +353,13 @@ $(document).ready(                                                              
       typedString = $('#search').val();
       //Code: ??        Event: Open help pop up           Not included in itself
       if (typedString == "??") {
-        $("#help").fadeIn(500);
+        $('#help').animate({
+          width: '90%'},400);
+          setTimeout(
+          	function() {
+          		$("#help").children().fadeIn(100);
+          	}, 400
+          );
         setTimeout(clearSearch, 150);
       }
       //Code: disco     Event: Start disco effect on ball                   Chec
@@ -481,7 +494,13 @@ $(document).ready(                                                              
       }
       //Code: shortket  Event: Open new tab shortcuts                       Chec
       if (typedString == "shortkey") {
-        $("#chromeshortcuts").fadeIn(500);
+        $('#chromeshortcuts').animate({
+          width: '90%'},400);
+        setTimeout(
+        	function() {
+        		$("#chromeshortcuts").children().fadeIn(100);
+        	}, 400
+        );
         setTimeout(clearSearch, 150);
       }
       //Code: byescore  Event: Reset the ball scores                        Chec
@@ -519,7 +538,13 @@ $(document).ready(                                                              
       }
       //Code: recent    Event: See last 9 closed tabs                       Chec
       if(typedString == "recent") {
-        $('#recentlyClosedMenu').fadeIn(500);
+        $('#recentlyClosedMenu').animate({
+          width: '90%'},400);
+        setTimeout(
+        	function() {
+        		$("#recentlyClosedMenu").children().fadeIn(100);
+        	}, 400
+        );
         clearSearch();
       }
       //Code: >         Event: Open quick menu                              Chec
@@ -527,8 +552,8 @@ $(document).ready(                                                              
         blurOn();                                                               //Blur the background
         setTimeout(                                                             //Wait until background is blurred
           function() {                                                          //... (function)
-            $('#quickMenu').fadeIn(500);                                        //Show the quick menu
-          }, 500                                                                //Delay (500)
+            $('#quickMenu').fadeIn(250);                                        //Show the quick menu
+          }, 250                                                                //Delay (500)
         );
         clearSearch();
       }
@@ -695,8 +720,8 @@ $(document).ready(                                                              
         blurOn();                                                               //Blur the background
         setTimeout(                                                             //Wait until background is blurred
           function() {                                                          //... (function)
-            $('#quickMenu').fadeIn(500);                                        //Show the quick menu
-          }, 500                                                                //Delay (500)
+            $('#quickMenu').fadeIn(250);                                        //Show the quick menu
+          }, 250                                                                //Delay (500)
         );
       }                                                                         //CLOSE OUT FUNCTION
     );

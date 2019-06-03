@@ -79,11 +79,11 @@ body {
 	right: 0px;
 	top: 0px;
 	bottom: 0px;
-	width: 90%;
+	width: 0px;
 	height: 90%;
 	text-align: center;
 	padding-top: 20px;
-	display: none;
+	/* display: none; */
 	overflow-y: auto;
 	padding-bottom: 20px;
 }
@@ -453,7 +453,7 @@ th {
 
 #screenone {
 	height: 100vh;
-	transition: all 0.5s ease-out;
+	transition: all 0.25s ease-out;
 	-webkit-backface-visibility: hidden;
 	-webkit-transform: translateZ(0) scale(1.0, 1.0);
 	transform: translateZ(0);
