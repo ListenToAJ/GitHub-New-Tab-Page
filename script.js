@@ -825,4 +825,3 @@ $(document).ready(                                                              
     );
   }                                                                             //Close out Main Function
 );
-//To get git to shut up
