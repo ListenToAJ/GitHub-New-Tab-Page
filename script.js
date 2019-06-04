@@ -584,7 +584,7 @@ $(document).ready(                                                              
         );
         clearSearch();
       }
-      //Code: pkg       Event: Open package tracker                         Chec
+      //Code: pkg       Event: Open package tracker
       if(typedString == 'pkg') {
         $('#search').animate(
           {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
@@ -705,7 +705,7 @@ $(document).ready(                                                              
       }                                                                         //Close out if statement
     });                                                                         //CLOSE OUT FUNCTION
 
-//Prop Hunt Reload\
+//Prop Hunt Reload -------------------------------------------------------------
     $('#wrapper').click(                                                        //When you click outside during prop hunt
       function() {                                                              //... (function)
         if(propState == true){                                                  //If prop hunt is on
