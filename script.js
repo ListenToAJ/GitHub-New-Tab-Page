@@ -446,7 +446,7 @@ $(document).ready(                                                              
       if (typedString == 'byesearch') {
         $('Input').fadeOut(500);
       }
-      //Code loadd      Event: Show loading screen                          Chec
+      //Code load      Event: Show loading screen                          Chec
       if (typedString == 'loadd') {
         screenChange('#screentwo');
         currentScreen = 2;
