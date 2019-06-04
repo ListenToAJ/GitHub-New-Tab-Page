@@ -173,8 +173,7 @@ th {
 
 
 /* Input (Search Bar) --------------------------------------------------------*/
-
-#debug {
+input {
 	outline: none;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-weight: 200;
@@ -187,36 +186,38 @@ th {
 	margin: auto;
 	line-height: 53px;
 	font-size: 27px;
-	top: 54px;
 	background-color: #333333;
-	border: 1px solid #474747;
+
+}
+
+
+#debug {
+	top: 54px;
+	border: 0px solid #474747;
 	border-radius: 8px;
-	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
-	padding-left: 40px;
+	box-shadow: none;
+	padding: 0px;
 	z-index: 2;
-	display: none;
+	width: 0px;
 }
 
 #search {
-	outline: none;
-	font-family: 'Source Sans Pro', sans-serif;
-	font-weight: 200;
-	color: white;
-	height: 53px;
-	width: 37.5%;
-	position: absolute;
-	left: 0px;
-	right: 0px;
-	margin: auto;
-	line-height: 53px;
-	font-size: 27px;
 	top: 108px;
-	background-color: #333333;
 	border: 1px solid #474747;
 	border-radius: 8px;
 	box-shadow: 1px 14px 65px 8px rgba(0, 0, 0, 0.54);
 	padding-left: 40px;
 	z-index: 2;
+}
+
+#pkg {
+	top: 54px;
+	border: 0px solid #474747;
+	border-radius: 8px;
+	box-shadow: none;
+	padding: 0px;
+	z-index: 2;
+	width: 0px;
 }
 
 

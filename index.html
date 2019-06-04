@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width">
     <title>New Tab</title>
     <link href="style.css" rel="stylesheet" type="text/css" />
-    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery-3.4.1.js"></script>
     <link rel="shortcut icon" type="image/png" href="images/icon16.png" />
     <script src="scripts/color.js"></script>
     <link href="fonts.css" rel="stylesheet">
@@ -51,7 +51,10 @@
       <form method="get" action="https://www.google.com/search">
         <input type="text" name="q" size="31" value="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="search">
       </form>
-      <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="debug">
+      <input type="text" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="debug" placeholder="Run code here">
+      <form method="get" action="https://tools.usps.com/go/TrackConfirmAction">
+        <input type="text" name="tLabels" size="31" value="" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="pkg" placeholder="Paste tracking # here">
+      </form>
       <div class=menutable id=chromeshortcuts>
         <div class=xbuttons>X</div>
         <table>
@@ -371,6 +374,10 @@
           <tr>
             <th>Open quick menu</th>
             <th class=secretCode><strong>></strong></th>
+          </tr>
+          <tr>
+            <th>Open package tracker</th>
+            <th class=secretCode><strong>pkg</strong></th>
           </tr>
         </table>
       </div>

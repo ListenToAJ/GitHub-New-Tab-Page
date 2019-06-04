@@ -30,12 +30,10 @@ var highScore;                                                                  
 var ballup = function (){                                                       //Function for ballup (for click/hover)
   vy += 1.3;                                                                    //Increase Velocity
   ay = -.01;                                                                    //Reset Downward Acceleration
-  $("#counter").fadeIn(500);                                                    //Counter fade in for cleanliness
-  $(".rightbutton").fadeOut(500);                                               //Fade out the buttons on the right side
-  $("#righttrig").hide();                                                       //Fade
-  $(".leftbutton").fadeOut(500);                                                //Fade in the buttons the left side
-  $("#lefttrig").hide();
-  $('input').blur();
+  $('#counter').fadeIn(500);                                                    //Counter fade in for cleanliness
+  $('.rightbutton').fadeOut(500);                                               //Fade out the buttons on the right side
+  $('.leftbutton').fadeOut(500);                                                //Fade in the buttons the left side
+  $('input').blur();                                                            //Unfocus any search bar
 }                                                                               //CLOSE OUT FUNCTION
 var ballup2 = function (){                                                      //Function for ballup 2 (for typing)
   vy += .4;                                                                     //Increase velocity
@@ -50,17 +48,16 @@ function clearSearch() {                                                        
   $('input').blur();                                                            //Unfocuses search bar
 }                                                                               //CLOSE OUT FUNCTION
 function closeHelp() {                                                          //Function for closing help menu
-  $(".menutable").children().fadeOut(150);
-  setTimeout(
-    function() {
-      $('.menutable').animate({
-        width: '0px'},350);
-    }, 350
-  );                                                                            //Fade out help menu
-  setTimeout(
-    function() {
-      $('input').focus();
-    }, 500
+  $('.menutable').children().fadeOut(150);                                      //Fade out the contents of a help menu
+  setTimeout(                                                                   //Wait until the last step is complete
+    function() {                                                                //... (function)
+      $('.menutable').animate({                                                 //Animate the remaining part of the menu by...
+        width: '0px'}, 350,                                                     //Shrinking the width to 0 in .35 seconds
+          function() {                                                          //Once the animation is done... (function)
+            $('#search').focus();                                               //Focus on the search
+          }                                                                     //CLOSE OUT FUNCTION
+      );
+    }, 150                                                                      //Delay
   );
 }                                                                               //CLOSE OUT FUNCTION
 function closeQuick() {                                                         //Function for closing quick menu
@@ -71,9 +68,15 @@ function closeQuick() {                                                         
     }, 250                                                                      //Delay (500)
   );
 }                                                                               //CLOSE OUT FUNCTION
-function screenChange (s) {                                                     //Function for screen change, Input: screenChange("#screennumber");
-  $("#screenone").fadeOut(500);                                                 //Screen one fade out
-  $(s).delay(500).fadeIn(500);                                                  //Fade in whatever screen you choose
+function screenChange(s) {                                                      //Function for screen change, Input: screenChange('#screennumber');
+  closePane();                                                                  //Cloes the panes (Covering screen)
+  setTimeout(                                                                   //Wait until the panes are closed
+    function() {                                                                //... (function)
+        $('#game').nextAll().hide();                                            //Hide everything
+        $(s).show();                                                            //Show whatever screen you called on
+        openPane();                                                             //Open the panes (To show screen)
+    }, 300                                                                      //Delay
+  );
 }                                                                               //CLOSE OUT FUNCTION
 function GetWindowDims() {                                                      //Function for Reassigning window values
   w = window.innerWidth;                                                        //Width of current window
@@ -82,26 +85,26 @@ function GetWindowDims() {                                                      
 }                                                                               //CLOSE OUT FUNCTION
 function changeGradient() {                                                     //Function for changing to gradient mode
   if(gradState == false){                                                       //If gradient mode is off
-    $("#circle").fadeOut(500);                                                  //Fade out the circle
+    $('#circle').fadeOut(500);                                                  //Fade out the circle
     setTimeout(                                                                 //Wait 500 milliseconds
       function() {                                                              //... (function)
         if(ballMode % 2 == 0){                                                  //If the ball is blue
-          $("#circle").addClass("gradientB");                                   //Add the blue gradient
+          $('#circle').addClass('gradientB');                                   //Add the blue gradient
         }                                                                       //Close out if statement
         else{                                                                   //If the ball is red (else)
-          $("#circle").addClass("gradientR");                                   //Add the red gradient
+          $('#circle').addClass('gradientR');                                   //Add the red gradient
         }                                                                       //Close out else statement
-        $("#circle").fadeIn(500);                                               //Fade the circle back in
+        $('#circle').fadeIn(500);                                               //Fade the circle back in
         gradState = true;                                                       //Turn gradient mode on (var)
       }, 500                                                                    //Delay
     );
   }                                                                             //Close out if statement
   else{                                                                         //If gradient mode is on
-    $("#circle").fadeOut(500);                                                  //Fade out the circle
+    $('#circle').fadeOut(500);                                                  //Fade out the circle
     setTimeout(                                                                 //Wait 500 milliseconds
       function() {                                                              //... (function)
-        $("#circle").removeClass("gradientB gradientR");                        //Remove any gradients
-        $("#circle").fadeIn(500);                                               //Fade the circle back in
+        $('#circle').removeClass('gradientB gradientR');                        //Remove any gradients
+        $('#circle').fadeIn(500);                                               //Fade the circle back in
         gradState = false;                                                      //Turn gradient mode off (var)
       }, 500                                                                    //Delay
     );
@@ -109,20 +112,20 @@ function changeGradient() {                                                     
 }                                                                               //CLOSE OUT FUNCTION
 function startTimer() {                                                         //Function for starting ball timer
   var seconds = 0;                                                              //Start a var for time
-  $("#counter").fadeOut(500);                                                   //Hide the counter
+  $('#counter').fadeOut(500);                                                   //Hide the counter
   setTimeout(                                                                   //Wait 500 seconds (Until counters gone)
     function() {                                                                //... (function)
-        $("#counter").remove();                                                 //Delete the counter completely
+        $('#counter').remove();                                                 //Delete the counter completely
     }, 500                                                                      //Delay
   );
-  $("#timer").delay(500).fadeIn(500);                                           //Fade in the timer
+  $('#timer').delay(500).fadeIn(500);                                           //Fade in the timer
   setInterval(                                                                  //Run the following code repeatadly
     function() {                                                                //... (function)
       seconds ++;                                                               //Add a second
       if(y <= 0){                                                               //If the ball drops
         seconds = 0;                                                            //Restart the timer
       }                                                                         //Close out if statement
-      $("#timer").html(seconds);                                                //Write the current time in the timer div
+      $('#timer').html(seconds);                                                //Write the current time in the timer div
       //HIGHSCORE SETTING
       highScore = localStorage.getItem('highScore');                            //Get the locally stored high score and save it to high score var
       if(seconds >= highScore){                                                 //If you meet or pass the high score
@@ -133,7 +136,7 @@ function startTimer() {                                                         
   );
   setInterval(                                                                  //Run the following code repeatadly
     function() {                                                                //... (function)
-      $("#circle").html(highScore)                                              //Display the height on the ball
+      $('#circle').html(highScore)                                              //Display the height on the ball
     }, 1                                                                        //Do this 1000 times a second
   );
 }                                                                               //CLOSE OUT FUNCTION
@@ -149,8 +152,8 @@ function lastClosed() {                                                         
   );
   setTimeout(                                                                   //Wait 100 milliseconds
     function() {                                                                //... (function)
-      if (lastClosedUrl.indexOf("chrome") == 0) {                               //If the last closed url is a local resource
-        console.log("Cannot load local resources")                              //Console log error message
+      if (lastClosedUrl.indexOf('chrome') == 0) {                               //If the last closed url is a local resource
+        console.log('Cannot load local resources')                              //Console log error message
       }                                                                         //Close out if statement
       else{                                                                     //If the last closed url is a webpage (else)
         window.open(lastClosedUrl, '_blank');                                   //Open it in a new window
@@ -175,7 +178,7 @@ function freeze() {                                                             
 }                                                                               //CLOSE OUT FUNCTION
 function removeTabs() {                                                         //Function for removing tabs
   chrome.tabs.getCurrent(                                                       //Hey chrome get me a list of tabs
-    function (ctab){                                                            //When you got it...
+    function(ctab) {                                                            //When you got it...
       chrome.tabs.query(                                                        //Take a query of...
         {windowId:ctab.windowId},                                               //All tabs in the current window
         function (tabs){                                                        //When you got it...
@@ -192,54 +195,63 @@ function removeTabs() {                                                         
   );
 }                                                                               //CLOSE OUT FUNCTION
 function testTabs() {                                                           //Function for opening tabs for testing
-  removeTabs();
-  setTimeout(
-    function(){
-      window.open("https://www.google.com/");
-      window.open("https://www.amazon.com/");
-      window.open("https://www.innovationcharter.org/");
-      window.open("https://repl.it/repls");
-      window.open("https://github.com/");
-      window.open("https://drive.google.com/drive/u/0/my-drive");
-      chrome.tabs.create({});
+  removeTabs();                                                                 //Close all previous tabs
+  setTimeout(                                                                   //Wait half a second
+    function() {                                                                //... (function)
+      window.open('https://www.google.com/');                                   //Open a test tab
+      window.open('https://www.amazon.com/');                                   //Open a test tab
+      window.open('https://www.innovationcharter.org/');                        //Open a test tab
+      window.open('https://repl.it/repls');                                     //Open a test tab
+      window.open('https://github.com/');                                       //Open a test tab
+      window.open('https://drive.google.com/drive/u/0/my-drive');               //Open a test tab
+      chrome.tabs.create({});                                                   //Make a new tab
         chrome.tabs.getCurrent(                                                 //Hey chrome get me a list of tabs
           function (ctab){                                                      //When you got it...
             chrome.tabs.query(                                                  //Take a query of...
               {windowId:ctab.windowId},                                         //All tabs in the current window
               function (tabs){                                                  //When you got it...
-                var firstItem = tabs[0];
-                chrome.tabs.remove(firstItem.id);
+                var firstItem = tabs[0];                                        //Make a temporary variable
+                chrome.tabs.remove(firstItem.id);                               //Remove the first tab (The original one)
               }
             );
           }
         );
-    }, 500
+    }, 500                                                                      //Delay
   );
 }                                                                               //CLOSE OUT FUNCTION
 function blurOn() {                                                             //Function for blurring the screen
-  $('#screenone').addClass('screenone--blur');
-  console.log('Blur turning on');
+  $('#screenone').addClass('screenone--blur');                                  //Blur the background
+  console.log('Blur turning on');                                               //Debugging
 }                                                                               //CLOSE OUT FUNCTION
 function blurOff() {                                                            //Function for unblurring the screen
-  $('#screenone').removeClass('screenone--blur');
-  console.log('Blur turning off');
+  $('#screenone').removeClass('screenone--blur');                               //Unblur the background
+  console.log('Blur turning off');                                              //Debugging
 }                                                                               //CLOSE OUT FUNCTION
 function openPane() {                                                           //Function for page load animation
-  setTimeout(
-    function() {
-    $("#leftIntroPane").animate({
-       left: '-846px'
-    }, { duration: 300, queue: false });
-
-    $("#rightIntroPane").animate({
-       right: '-846px'
-    }, { duration: 300, queue: false });
-  }, 500);
-  setTimeout(
-    function() {
-      $('.introPane').hide();
-    }, 800
+  setTimeout(                                                                   //Wait half a second (for looks)
+    function() {                                                                //... (function)
+      $('#leftIntroPane').animate({                                             //Animate the left pane by...
+         left: '-846px'                                                         //Move the pane out of sight
+      }, { duration: 300, queue: false });                                      //Duration, and false queue (for flush animation)
+      $('#rightIntroPane').animate({                                            //Animate the right pane by...
+         right: '-846px'                                                        //Move the pane out of sight
+      }, { duration: 300, queue: false });                                      //Duration, and false queue (for flush animation)
+    }, 500                                                                      //Delay
   );
+  setTimeout(                                                                   //Once those panes are out of sight
+    function() {                                                                //... (function)
+      $('.introPane').hide();                                                   //Hide the panes
+    }, 800                                                                      //Delay
+  );
+}                                                                               //CLOSE OUT FUNCTION
+function closePane() {                                                          //Function for page load animation
+  $('.introPane').show();                                                       //Show the panes
+    $('#leftIntroPane').animate({                                               //Animate the left pane by...
+       left: '0px'                                                              //Moving the pane to half screen
+    }, { duration: 300, queue: false });                                        //Duration, and false queue (for flush animation)
+    $('#rightIntroPane').animate({                                              //Animate the right pane by...
+       right: '0px'                                                             //Moving the pane to half screen
+    }, { duration: 300, queue: false });                                        //Duration, and false queue (for flush animation)
 }                                                                               //CLOSE OUT FUNCTION
 
 //Notes pre-work ---------------------------------------------------------------
@@ -249,7 +261,7 @@ saveArray(myList);                                                              
 //JQuery -----------------------------------------------------------------------
 $(document).ready(                                                              //Starts up JQuery
   function() {                                                                  //Main function
-		$(".menutable").children().hide();                                          //Hide the contents of the menus
+		$('.menutable').children().hide();                                          //Hide the contents of the menus
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -263,9 +275,9 @@ $(document).ready(                                                              
         $('#circle').css({bottom:y});                                           //Change the bottom for Y pos
         y += vy;                                                                //Dynamics
         vy += ay;                                                               //Dynamics
-        n = $("#circle").css("bottom");                                         //Assign pixel count from bottom to "n"
+        n = $('#circle').css('bottom');                                         //Assign pixel count from bottom to 'n'
         n = PXtoNumber (n);                                                     //Uses function (PXtoNumber)
-        $("#counter").html(n);                                                  //Write the "n" in the #counter div
+        $('#counter').html(n);                                                  //Write the 'n' in the #counter div
         if (y <= 0) {                                                           //If it goes under or is at 0...
           vy = 0;                                                               //Make it still
           ay = 0;                                                               //Make it still
@@ -276,57 +288,57 @@ $(document).ready(                                                              
     );
 
 //Color Switches ---------------------------------------------------------------
-    $("#switchball").click(                                                     //When you click on ball switch
+    $('#switchball').click(                                                     //When you click on ball switch
       function() {                                                              //... (function)
         ballMode = ballMode + 1;                                                //Change ballMode EVEN IS BLUE / ODD IS RED
         if(ballMode % 2 == 0 && gradState == false){                            //If ballMode is even
-          $("#circle").animate({backgroundColor:"#22bee0"});                    //Make ball blue
-          $(this).animate({backgroundColor:"#22bee0"});                         //Make ball switch blue
+          $('#circle').animate({backgroundColor:'#22bee0'});                    //Make ball blue
+          $(this).animate({backgroundColor:'#22bee0'});                         //Make ball switch blue
         }                                                                       //Close out if statement
         if(ballMode % 2 == 0 && gradState == true){                             //If ballMode is even and gradient is on
-          $("#circle").fadeOut(500);                                            //Hide the circle
+          $('#circle').fadeOut(500);                                            //Hide the circle
           setTimeout(                                                           //Wait 500 milliseconds
             function() {                                                        //... (function)
-              $('#circle').removeClass("gradientR");                            //Take off red gradient
-              $("#circle").addClass("gradientB")                                //Put on blue gradient
-              $("#circle").fadeIn(500);                                         //Bring circle back
-              $("#switchball").animate({backgroundColor:"#22bee0"});            //Make ball switch blue
+              $('#circle').removeClass('gradientR');                            //Take off red gradient
+              $('#circle').addClass('gradientB')                                //Put on blue gradient
+              $('#circle').fadeIn(500);                                         //Bring circle back
+              $('#switchball').animate({backgroundColor:'#22bee0'});            //Make ball switch blue
             }, 500);                                                            //Delay
         }                                                                       //Close out if statement
         if(ballMode % 2 == 1 && gradState == false){                            //If ballMode is odd
-          $("#circle").animate({backgroundColor:"#e04422"});                    //Make ball red
-          $(this).animate({backgroundColor:"#e04422"});                         //Make ball switch red
+          $('#circle').animate({backgroundColor:'#e04422'});                    //Make ball red
+          $(this).animate({backgroundColor:'#e04422'});                         //Make ball switch red
         }                                                                       //Close out if statement
         if(ballMode % 2 == 1 && gradState == true){                             //If ballmode is odd and gradient is on
-          $("#circle").fadeOut(500);                                            //Hide the circle
+          $('#circle').fadeOut(500);                                            //Hide the circle
           setTimeout(                                                           //Wait 500 milliseconds
             function() {                                                        //... (function)
-              $('#circle').removeClass("gradientB");                            //Take off Blue gradient
-              $("#circle").addClass("gradientR")                                //Put on red gradient
-              $("#circle").fadeIn(500);                                         //Bring circle back
-              $("#switchball").animate({backgroundColor:"#e04422"});            //Make ball switch blue
-            }, 500);                                                         //Delay
+              $('#circle').removeClass('gradientB');                            //Take off Blue gradient
+              $('#circle').addClass('gradientR')                                //Put on red gradient
+              $('#circle').fadeIn(500);                                         //Bring circle back
+              $('#switchball').animate({backgroundColor:'#e04422'});            //Make ball switch blue
+            }, 500);                                                            //Delay
         }                                                                       //Close out if statement
       }                                                                         //CLOSE OUT FUNCTION
     );
-    $("#switchback").click(                                                     //When you click on back switch
+    $('#switchback').click(                                                     //When you click on back switch
       function() {                                                              //... (function)
         backMode = backMode + 1;                                                //Change backMode
         if(backMode % 2 == 0){                                                  //If backMode is even
-          $("body,#wrapper").animate({backgroundColor:"#fffaf4"});              //Brighten background
-          $(this).animate({backgroundColor:"#333333"});                         //Darken button
-          $("#counter").animate({color:"#333333"});                             //Darken counter
-          $(".corner").animate({borderColor:"#333333"});                        //Darken corner
+          $('body,#wrapper').animate({backgroundColor:'#fffaf4'});              //Brighten background
+          $(this).animate({backgroundColor:'#333333'});                         //Darken button
+          $('#counter').animate({color:'#333333'});                             //Darken counter
+          $('.corner').animate({borderColor:'#333333'});                        //Darken corner
         }                                                                       //Close out if statement
         else{                                                                   //If backMode is odd (else)
-          $("body,#wrapper").animate({backgroundColor:"#333333"});              //Darken background
-          $(this).animate({backgroundColor:"#fffaf4"});                         //Brighten button
-          $("#counter").animate({color:"#fffaf4"});                             //Darken counter
-          $(".corner").animate({borderColor:"#fffaf4"});                        //Darken corner
+          $('body,#wrapper').animate({backgroundColor:'#333333'});              //Darken background
+          $(this).animate({backgroundColor:'#fffaf4'});                         //Brighten button
+          $('#counter').animate({color:'#fffaf4'});                             //Darken counter
+          $('.corner').animate({borderColor:'#fffaf4'});                        //Darken corner
         }                                                                       //Close out else statement
       }                                                                         //CLOSE OUT FUNCTION
     );
-    $(".switch").mouseover(                                                     //When you hover over a switch icon
+    $('.switch').mouseover(                                                     //When you hover over a switch icon
       function() {                                                              //... (function)
         $(this).animate({                                                       //Animate it to...
           bottom: '15px'                                                        //Go up 5 px
@@ -339,25 +351,25 @@ $(document).ready(                                                              
         },150);                                                                 //In 150 milliseconds
       }                                                                         //CLOSE OUT FUNCTION
     );
-    $("#circle").click(                                                         //When you click on the circle
+    $('#circle').click(                                                         //When you click on the circle
       function() {                                                              //... (function)
         changeGradient();                                                       //Click uses function (changeGradient)
       }                                                                         //CLOSE OUT FUNCTION
     );
-    $("#counter").click(                                                        //When you click on the height counter
+    $('#counter').click(                                                        //When you click on the height counter
       function() {                                                              //...(function)
         startTimer();                                                           //Start the timer
       }                                                                         //CLOSE OUT FUNCITON
     );
 
 //Ballup Function Activations --------------------------------------------------
-    $("#wrapper").click(                                                        //When you click on the wrapper
+    $('#wrapper').click(                                                        //When you click on the wrapper
       ballup                                                                    //Click uses function (ballup)
     );
-    $("body").keyup(                                                            //When you type in search bar
+    $('body').keyup(                                                            //When you type in search bar
       ballup2                                                                   //Keyup uses function (ballup2)
     );
-    $("#circle").mouseover(                                                     //When you hover over circle
+    $('#circle').mouseover(                                                     //When you hover over circle
       ballup                                                                    //Mouseover uses function (ballup)
     );
 
@@ -365,23 +377,23 @@ $(document).ready(                                                              
     function secretCode() {                                                     //Check for secret codes
       typedString = $('#search').val();
       //Code: ??        Event: Open help pop up           Not included in itself
-      if (typedString == "??") {
+      if (typedString == '??') {
         $('#help').animate({
           width: '90%'},350);
           setTimeout(
           	function() {
-          		$("#help").children().fadeIn(150);
+          		$('#help').children().fadeIn(150);
           	}, 350
           );
         setTimeout(clearSearch, 150);
       }
       //Code: disco     Event: Start disco effect on ball                   Chec
-      if (typedString == "disco") {
-        $("#circle").fadeOut(500);
+      if (typedString == 'disco') {
+        $('#circle').fadeOut(500);
         setTimeout(
           function() {
-            $("#circle").removeClass("gradientB gradientR");
-            $("#circle").fadeIn(500);
+            $('#circle').removeClass('gradientB gradientR');
+            $('#circle').fadeIn(500);
           }, 500
         );
         setInterval(
@@ -400,19 +412,15 @@ $(document).ready(                                                              
         clearSearch();
       }
       //Code: fulldisco Event: Start disco effect and hide all else         Chec
-      if (typedString == "fulldisco") {
-        $("#circle").fadeOut(500);
+      if (typedString == 'fulldisco') {
+        $('#circle').fadeOut(500);
         setTimeout(
           function() {
-            $("#circle").removeClass("gradientB gradientR");
-            $("#circle").fadeIn(500);
+            $('#circle').removeClass('gradientB gradientR');
+            $('#circle').fadeIn(500);
           }, 500
         );
-        $("Input").fadeOut(500);
-        $("#switchball").fadeOut(500);
-        $("#switchback").fadeOut(500);
-        $(".corner").fadeOut(500);
-        $('#stringLights').fadeOut(500);
+        $('input, #switchball, #switchback, .corner, #stringLights').fadeOut(500);
         setInterval(function() {
           $('#circle').animate({
               backgroundColor: '#e72763'
@@ -426,103 +434,109 @@ $(document).ready(                                                              
         }, 1000);
       }
       //Code: pong      Event: Open browser pong                            Chec
-      if (typedString == "pong") {
-        window.location = "http://stewd.io/pong/";
+      if (typedString == 'pong') {
+        window.location = 'http://stewd.io/pong/';
       }
       //Code: opentab   Event: Open tabs for testing                        Chec
-      if (typedString == "opentab") {
+      if (typedString == 'opentab') {
         testTabs();
         clearSearch();
       }
       //Code: byesearch Event: Remove search bar                            Chec
-      if (typedString == "byesearch") {
-        $("Input").fadeOut(500);
+      if (typedString == 'byesearch') {
+        $('Input').fadeOut(500);
       }
       //Code loadd      Event: Show loading screen                          Chec
-      if (typedString == "loadd") {
-        screenChange("#screentwo");
+      if (typedString == 'loadd') {
+        screenChange('#screentwo');
         currentScreen = 2;
       }
       //Code: whatkey   Event: Open Key checker                             Chec
-      if (typedString == "whatkey") {
-        window.location = "https://keycode.info/";
+      if (typedString == 'whatkey') {
+        window.location = 'https://keycode.info/';
       }
       //Code: debug     Event: Open Debug menu                              Chec
-      if (typedString == "debug") {
-        $("#search").fadeOut(250);
-        $("#counter, #timer").fadeOut(250);
-        setTimeout(function() {
-          $("#counter, #timer").remove();
-        }, 250);
-        $("#debug").delay(250).fadeIn(250);
-        setTimeout(
+      if (typedString == 'debug') {
+        $('#search').animate(
+          {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
           function() {
-            $("#debug").focus();
-          }, 500
+            $('#search').css({'box-shadow': 'none'});
+            $('#debug').css({'box-shadow': '1px 14px 65px 8px rgba(0, 0, 0, 0.54)', border: '1px solid #474747'});
+          }
         );
+        $('#counter, #timer').fadeOut(250);
+        setTimeout(function() {
+          $('#counter, #timer').remove();
+          $('#debug').animate(
+            {width: '37.5%','padding-left': '40px'}, 350,
+              function() {
+                $('#debug').focus();
+              }
+          );
+        }, 250);
       }
       //Code: timer     Event: Start the timer                              Chec
-      if (typedString == "timer") {
+      if (typedString == 'timer') {
         startTimer();
         clearSearch();
       }
       //Code: gradee    Event: Open schedule                                Chec
-      if (typedString == "class") {
-        $("#schedule").fadeIn(500);
+      if (typedString == 'class') {
+        $('#schedule').fadeIn(500);
         clearSearch();
       }
       //Code: shownote  Event: Show all currently stored notes              Chec
-      if (typedString == "shownote") {
-        $(".note").fadeIn(500).css("display", "inline-block");
+      if (typedString == 'shownote') {
+        $('.note').fadeIn(500).css('display', 'inline-block');
         clearSearch();
       }
       //Code: note      Event: Add a new note                               Chec
-      if (typedString == "note") {
-        $("#search").fadeOut(250);
-        $("#counter, #timer").fadeOut(250);
+      if (typedString == 'note') {
+        $('#search').fadeOut(250);
+        $('#counter, #timer').fadeOut(250);
         setTimeout(function() {
-          $("#counter, #timer").remove();
+          $('#counter, #timer').remove();
         }, 500);
-        $("#notetaker").delay(250).fadeIn(250);
+        $('#notetaker').delay(250).fadeIn(250);
         setTimeout(
           function() {
-            $("#notetaker").focus();
+            $('#notetaker').focus();
           }, 500
         );
       }
       //Code: prop      Event: Open prop hunt game                          Chec
-      if (typedString == "prop") {
-        $("#game").html('<iframe src="https://game216148.konggames.com/gamez/0021/6148/live/game.html" id="propGame" allowfullscreen="true" webkitallowfullscreen="true" mozallowfullscreen="true" msallowfullscreen="true" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no" width="100%" height="100%"></iframe>');
+      if (typedString == 'prop') {
+        $('#game').html("<iframe src='https://game216148.konggames.com/gamez/0021/6148/live/game.html' id='propGame' allowfullscreen='true' webkitallowfullscreen='true' mozallowfullscreen='true' msallowfullscreen='true' marginwidth='0' marginheight='0' hspace='0' vspace='0' frameborder='0' scrolling='no' width='100%' height='100%'></iframe>");
         propState = true;
         setTimeout(
           function() {
-            $("#propGame").fadeIn(500);
+            $('#propGame').fadeIn(500);
             clearSearch();
           }, 200
         );
       }
       //Code: mosh      Event: Open Javascript tutorial                     Chec
-      if (typedString == "mosh") {
-        window.location = "https://codewithmosh.com/courses/enrolled/324741"
+      if (typedString == 'mosh') {
+        window.location = 'https://codewithmosh.com/courses/enrolled/324741'
       }
       //Code: shortket  Event: Open new tab shortcuts                       Chec
-      if (typedString == "shortkey") {
+      if (typedString == 'shortkey') {
         $('#chromeshortcuts').animate({
           width: '90%'},350);
         setTimeout(
         	function() {
-        		$("#chromeshortcuts").children().fadeIn(150);
+        		$('#chromeshortcuts').children().fadeIn(150);
         	}, 350
         );
         setTimeout(clearSearch, 150);
       }
       //Code: byescore  Event: Reset the ball scores                        Chec
-      if (typedString == "byescore") {
+      if (typedString == 'byescore') {
         resetScore();
         clearSearch();
       }
       //Code: lightshow Event: Show string lights                           Chec
-      if (typedString == "lightshow") {
+      if (typedString == 'lightshow') {
         if(localStorage.getItem(stringLights) == 'true'){
           // alert('Turning Lights off');
           localStorage.setItem(stringLights, 'false');
@@ -536,7 +550,7 @@ $(document).ready(                                                              
         clearSearch();
       }
       //Code: freeze    Event: Freeze the browser                           Chec
-      if (typedString == "frz") {
+      if (typedString == 'frz') {
         if(window.confirm('Freeze?') == true){
           freeze();
         }
@@ -545,23 +559,23 @@ $(document).ready(                                                              
         }
       }
       //Code: tab       Event: Close all prev tabs                          Chec
-      if (typedString == "tab") {
+      if (typedString == 'tab') {
         removeTabs();
         clearSearch();
       }
       //Code: recent    Event: See last 9 closed tabs                       Chec
-      if(typedString == "recent") {
+      if(typedString == 'recent') {
         $('#recentlyClosedMenu').animate({
           width: '90%'},350);
         setTimeout(
         	function() {
-        		$("#recentlyClosedMenu").children().fadeIn(150);
+        		$('#recentlyClosedMenu').children().fadeIn(150);
         	}, 350
         );
         clearSearch();
       }
       //Code: >         Event: Open quick menu                              Chec
-      if(typedString == ">") {
+      if(typedString == '>') {
         blurOn();                                                               //Blur the background
         setTimeout(                                                             //Wait until background is blurred
           function() {                                                          //... (function)
@@ -570,24 +584,44 @@ $(document).ready(                                                              
         );
         clearSearch();
       }
+      //Code: pkg       Event: Open package tracker
+      if(typedString == 'pkg') {
+        $('#search').animate(
+          {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
+          function() {
+            $('#search').css({'box-shadow': 'none'});
+            $('#pkg').css({'box-shadow': '1px 14px 65px 8px rgba(0, 0, 0, 0.54)', border: '1px solid #474747'});
+          }
+        );
+        $('#counter, #timer').fadeOut(250);
+        setTimeout(function() {
+          $('#counter, #timer').remove();
+          $('#pkg').animate(
+            {width: '37.5%','padding-left': '40px'}, 350,
+              function() {
+                $('#pkg').focus();
+              }
+          );
+        }, 250);
+      }
     }
 
 //Secret Code running ----------------------------------------------------------
-    $("#search").keyup(                                                         //When you type in the search bar
+    $('#search').keyup(                                                         //When you type in the search bar
       function() {                                                              //... (function)
           secretCode();                                                         //Check for any codewords
       }                                                                         //CLOSE OUT FUNCTION
     );
 
 //Schedule ---------------------------------------------------------------------
-    $("#schedule").click(                                                       //When you click on the schedule
+    $('#schedule').click(                                                       //When you click on the schedule
       function() {                                                              //... (function)
         $(this).fadeOut(500);                                                   //Fade out the schedule
       }                                                                         //CLOSE OUT FUNCTION
     );
 
 //Help Menu --------------------------------------------------------------------
-    $(".xbuttons").click(                                                       //When you click on the X button on the help menu
+    $('.xbuttons').click(                                                       //When you click on the X button on the help menu
       function() {                                                              //... (function)
         closeHelp();                                                            //Run closeHelp function;
       }                                                                         //CLOSE OUT FUNCTION
@@ -603,7 +637,7 @@ $(document).ready(                                                              
 //Keyboard Shortcuts -----------------------------------------------------------
     $(document).keyup(                                                          //When any key goes up
       function(e) {                                                             //... (function)
-        if (e.key === "Escape") {                                               //If the key you pressed is escape...
+        if (e.key === 'Escape') {                                               //If the key you pressed is escape...
           closeHelp();                                                          //Fade out the help menu
           closeQuick();                                                         //Close quick menu
         }                                                                       //Close out if statement                                                                     //Close out if statement
@@ -611,7 +645,7 @@ $(document).ready(                                                              
     );
 
 //Second Screen (Loading) ------------------------------------------------------
-    $("#screentwo").mouseover(                                                  //When you click on the second screen (Loading)
+    $('#screentwo').mouseover(                                                  //When you click on the second screen (Loading)
       function() {                                                              //... (function)
         location.reload();                                                      //Reload the page
       }                                                                         //CLOSE OUT FUNCTION
@@ -625,7 +659,7 @@ $(document).ready(                                                              
     );
 
 //Debug Menu -------------------------------------------------------------------
-    $("#debug").keyup(                                                          //When you type in the debug menu
+    $('#debug').keyup(                                                          //When you type in the debug menu
       function(e) {                                                             //... (function)
         var debugString = $(this).val();                                        //Store typed text to debugString var
         if(e.keyCode == 13){                                                    //If you click enter
@@ -636,7 +670,7 @@ $(document).ready(                                                              
     );
 
 //Hot Corners ------------------------------------------------------------------
-    $(".corner").mouseover(                                                     //When you mouse over a hot corner...
+    $('.corner').mouseover(                                                     //When you mouse over a hot corner...
       function() {                                                              //... (function)
         lastClosed();                                                           //Open the last closed website
       }                                                                         //CLOSE OUT FUNCTION
@@ -657,22 +691,22 @@ $(document).ready(                                                              
         }                                                                       //Close out method
       }                                                                         //Close out methods
     });                                                                         //Close out Vue
-    $("#notetaker").on('keypress',function(e) {                                 //When you type in the note taker input bar
+    $('#notetaker').on('keypress',function(e) {                                 //When you type in the note taker input bar
       if(e.which == 13) {                                                       //If you clicked enter...
-        var currentNote  = $("#notetaker").val();                               //Make a temporary variable that holds what you typed
+        var currentNote  = $('#notetaker').val();                               //Make a temporary variable that holds what you typed
         myList.push(currentNote);                                               //Throw it on to your array of notes
         saveArray(myList);                                                      //Save your notes list to local storage
-        $("input").val('');                                                     //Empty out the note taker input bar (to prep next note)
+        $('input').val('');                                                     //Empty out the note taker input bar (to prep next note)
         setTimeout(                                                             //Wait one millisecond, then
           function() {                                                          //... (function)
-            $(".note").show().css("display","inline-block");                    //Refresh the shown notes
+            $('.note').show().css('display','inline-block');                    //Refresh the shown notes
           },1                                                                   //Delay
         );
       }                                                                         //Close out if statement
     });                                                                         //CLOSE OUT FUNCTION
 
 //Prop Hunt Reload -------------------------------------------------------------
-    $("#wrapper").click(                                                        //When you click outside during prop hunt
+    $('#wrapper').click(                                                        //When you click outside during prop hunt
       function() {                                                              //... (function)
         if(propState == true){                                                  //If prop hunt is on
           location.reload();                                                    //Reload the page
@@ -683,12 +717,12 @@ $(document).ready(                                                              
 //Chrome Shortcuts -------------------------------------------------------------
     $('tr').mouseover(                                                          //When you have your mouse over a table row
       function() {                                                              //... (function)
-        $(this).css("color","#e72763");                                         //Make the text purple
+        $(this).css('color','#e72763');                                         //Make the text purple
       }                                                                         //CLOSE OUT FUNCTION
     );
     $('tr').mouseout(                                                           //When you have your mouse leave a table row
       function() {                                                              //... (function)
-        $(this).css("color","black");                                           //Make the text black
+        $(this).css('color','black');                                           //Make the text black
       }                                                                         //CLOSE OUT FUNCTION
     );
     $('.chromeShortcutDivs').click(                                             //When you click on a header in the chrome menu
@@ -714,7 +748,7 @@ $(document).ready(                                                              
       created: function() {                                                     //The following function will be run when the Vue is successfully built
         chrome.sessions.getRecentlyClosed({}, (results)=>{                      //Hey chrome get my 25 last closed tabs
           results = results.filter(                                             //Filter out...
-            (r)=>r.tab && r.tab.title != "New Tab"                              //Anything matching new tab
+            (r)=>r.tab && r.tab.title != 'New Tab'                              //Anything matching new tab
           );
           var gotLast9 = results.map((r) => {                                   //Create a array that...
             return{TITLE: r.tab.title, URL: r.tab.url}                          //Contains only the title and url of each object
@@ -746,47 +780,47 @@ $(document).ready(                                                              
     );
     $('#quickIcon1').click(                                                     //Quick icon link
       function() {
-        window.location = "https://amazon.com/"
+        window.location = 'https://amazon.com/'
       }
     );
     $('#quickIcon2').click(                                                     //Quick icon link
       function() {
-        window.location = "https://www.santanderbank.com/us/personal"
+        window.location = 'https://www.santanderbank.com/us/personal'
       }
     );
     $('#quickIcon3').click(                                                     //Quick icon link
       function() {
-        window.location = "https://ma-innovation.myfollett.com/aspen/logon.do"
+        window.location = 'https://ma-innovation.myfollett.com/aspen/logon.do'
       }
     );
     $('#quickIcon4').click(                                                     //Quick icon link
       function() {
-        window.location = "https://repl.it/repls"
+        window.location = 'https://repl.it/repls'
       }
     );
     $('#quickIcon5').click(                                                     //Quick icon link
       function() {
-        window.location = "https://github.com/"
+        window.location = 'https://github.com/'
       }
     );
     $('#quickIcon6').click(                                                     //Quick icon link
       function() {
-        window.location = "https://mail.google.com/mail/u/0/"
+        window.location = 'https://mail.google.com/mail/u/0/'
       }
     );
     $('#quickIcon7').click(                                                     //Quick icon link
       function() {
-        window.location = "https://www.youtube.com/"
+        window.location = 'https://www.youtube.com/'
       }
     );
     $('#quickIcon8').click(                                                     //Quick icon link
       function() {
-        window.location = "https://drive.google.com/drive/u/0/my-drive"
+        window.location = 'https://drive.google.com/drive/u/0/my-drive'
       }
     );
     $('#quickIcon9').click(                                                     //Quick icon link
       function() {
-        window.location = "https://www.netflix.com/browse"
+        window.location = 'https://www.netflix.com/browse'
       }
     );
   }                                                                             //Close out Main Function
