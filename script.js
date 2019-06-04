@@ -75,7 +75,7 @@ function screenChange(s) {                                                      
         $('#game').nextAll().hide();                                            //Hide everything
         $(s).show();                                                            //Show whatever screen you called on
         openPane();                                                             //Open the panes (To show screen)
-    }, 300                                                                      //Delay
+    }, 400                                                                      //Delay
   );
 }                                                                               //CLOSE OUT FUNCTION
 function GetWindowDims() {                                                      //Function for Reassigning window values
@@ -447,7 +447,7 @@ $(document).ready(                                                              
         $('Input').fadeOut(500);
       }
       //Code load      Event: Show loading screen                          Chec
-      if (typedString == 'loadd') {
+      if (typedString == 'load') {
         screenChange('#screentwo');
         currentScreen = 2;
       }
