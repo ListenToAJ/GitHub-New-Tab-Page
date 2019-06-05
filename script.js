@@ -457,6 +457,7 @@ $(document).ready(                                                              
       }
       //Code: debug     Event: Open Debug menu                              Chec
       if (typedString == 'debug') {
+        $('#debug').css({display: 'block'});
         $('#search').animate(
           {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
           function() {
@@ -561,7 +562,12 @@ $(document).ready(                                                              
       //Code: tab       Event: Close all prev tabs                          Chec
       if (typedString == 'tab') {
         removeTabs();
-        clearSearch();
+        // clearSearch();
+        setTimeout(
+          function() {
+            location.reload();
+          }, 1000
+        );
       }
       //Code: recent    Event: See last 9 closed tabs                       Chec
       if(typedString == 'recent') {
@@ -586,6 +592,7 @@ $(document).ready(                                                              
       }
       //Code: pkg       Event: Open package tracker
       if(typedString == 'pkg') {
+        $('#pkg').css({display: 'block'});
         $('#search').animate(
           {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
           function() {
