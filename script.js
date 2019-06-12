@@ -209,6 +209,8 @@ function removeTabsIgnoreLast() {                                               
           removeTabs();                                                         //Remove all the tabs
           setTimeout(                                                           //Wait another 500 milliseconds
             function() {                                                        //... (function)
+              vy += 2;                                                          //Ballup
+              ay = -.01;                                                        //Ballup
               openPane();                                                       //Open the panes
               setTimeout(                                                       //Wait until the panes are open
                 function() {                                                    //... (function)
