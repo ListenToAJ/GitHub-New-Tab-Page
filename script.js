@@ -194,6 +194,14 @@ function removeTabs() {                                                         
     }
   );
 }                                                                               //CLOSE OUT FUNCTION
+function removeTabIgnoreLast() {
+  chrome.tabs.getCurrent(
+    function(currentTab){
+      chrome.tabs.move(currentTab.id, { 'index': currentTab.index - 1 });
+    }
+  );
+  removeTabs();
+}
 function testTabs() {                                                           //Function for opening tabs for testing
   removeTabs();                                                                 //Close all previous tabs
   setTimeout(                                                                   //Wait half a second
@@ -562,12 +570,16 @@ $(document).ready(                                                              
       //Code: tab       Event: Close all prev tabs                          Chec
       if (typedString == 'tab') {
         removeTabs();
-        // clearSearch();
+        closePane();
         setTimeout(
           function() {
             location.reload();
-          }, 1000
+          }, 750
         );
+      }
+      //Code: ltab      Event: Close all prev tab but last                  Chec
+      if (typedString == 'ltab') {
+        removeTabIgnoreLast();
       }
       //Code: recent    Event: See last 9 closed tabs                       Chec
       if(typedString == 'recent') {
