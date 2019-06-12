@@ -194,14 +194,54 @@ function removeTabs() {                                                         
     }
   );
 }                                                                               //CLOSE OUT FUNCTION
-function removeTabIgnoreLast() {
-  chrome.tabs.getCurrent(
-    function(currentTab){
-      chrome.tabs.move(currentTab.id, { 'index': currentTab.index - 1 });
-    }
+function removeTabsIgnoreLast() {                                               //Function for removing all tabs except last one
+  clearSearch();                                                                //Clear the search bar
+  closePane();                                                                  //Close the pane
+  setTimeout(                                                                   //Wait 500 milliseconds
+    function() {                                                                //... (function)
+      chrome.tabs.getCurrent(                                                   //Hey Chrome get the current tabs info
+        function(currentTab){                                                   //With that information
+          chrome.tabs.move(currentTab.id, { 'index': currentTab.index - 1 });   //Move it back one
+        }
+      );
+      setTimeout(                                                               //Wait another 500 milliseconds
+        function() {                                                            //... (function)
+          removeTabs();                                                         //Remove all the tabs
+          setTimeout(                                                           //Wait another 500 milliseconds
+            function() {                                                        //... (function)
+              openPane();                                                       //Open the panes
+              setTimeout(                                                       //Wait until the panes are open
+                function() {                                                    //... (function)
+                  chrome.tabs.getCurrent(                                       //Hey Chrome get the current tabs info
+                    function(currentTab){                                       //With that information
+                      chrome.tabs.move(currentTab.id, { 'index': currentTab.index + 1 });//Move the tab up one
+                    }
+                  );
+                  setTimeout(                                                   //Wait 250 milliseconds
+                    function() {                                                //... (function)
+                      chrome.tabs.getCurrent(                                   //Hey chrome get me a list of tabs
+                        function(ctab) {                                        //When you got it...
+                          chrome.tabs.query(                                    //Take a query of...
+                            {windowId:ctab.windowId},                           //All tabs in the current window
+                            function (tabs){                                    //When you got it...
+                              var updateProperties = { 'active': true };        //Prepare the active update
+                              chrome.tabs.update(tabs[0].id, updateProperties, (tab) => { });//Update the special tab to focus it
+                            }
+                          );
+                        }
+                      );
+                    }, 250
+                  );
+                }, 800
+              );
+
+            }, 500
+          );
+        }, 500
+      );
+    }, 500
   );
-  removeTabs();
-}
+}                                                                               //CLOSE OUT FUNCTION
 function testTabs() {                                                           //Function for opening tabs for testing
   removeTabs();                                                                 //Close all previous tabs
   setTimeout(                                                                   //Wait half a second
@@ -579,7 +619,7 @@ $(document).ready(                                                              
       }
       //Code: ltab      Event: Close all prev tab but last                  Chec
       if (typedString == 'ltab') {
-        removeTabIgnoreLast();
+        removeTabsIgnoreLast();
       }
       //Code: recent    Event: See last 9 closed tabs                       Chec
       if(typedString == 'recent') {
@@ -842,5 +882,6 @@ $(document).ready(                                                              
         window.location = 'https://www.netflix.com/browse'
       }
     );
+
   }                                                                             //Close out Main Function
 );
