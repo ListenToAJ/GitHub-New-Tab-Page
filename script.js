@@ -316,6 +316,9 @@ function currentTime() {
   var minute = today.getMinutes();                                              //Get the current minute
   hour = toWords(hour);                                                         //Translate hour # to string
   minute = toWords(minute);                                                     //Translate minute # to string
+  if (['one','two','three','four','five','six','seven','eight','nine'].indexOf(minute) > -1){
+    minute = "O\' " + minute;
+  }
   $('#wrapper').html(hour + ' : ' + minute);                                    //Write the time
 }
 //Notes pre-work ---------------------------------------------------------------
