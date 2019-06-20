@@ -1,13 +1,31 @@
+/* Font Creating -------------------------------------------------------------*/
+
+@font-face{
+  font-family: Cursive;
+  src: url(fonts/cursive.ttf);}
+  @font-face{
+    font-family: CursiveTwo;
+    src: url(fonts/cursiveTwo.ttf);}
+  @font-face{
+    font-family: Rosarina;
+    src: url(fonts/rosarina.otf);}
+
 /* Background/Big Picture ----------------------------------------------------*/
 
 #wrapper {
-	width: 100%;
-	height: 100vh;
-	background: #333333;
-	z-index: -1;
-	position: absolute;
-	right: 0px;
-	top: 0px;
+  width: 100%;
+  height: 100vh;
+  background: #333333;
+  z-index: -1;
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  font-family: Rosarina;
+  font-size: 80px;
+  line-height: 100vh;
+  color: rgba(255, 255, 255, 0.05);
+  text-align: center;
+  font-weight: bolder;
 }
 
 body {

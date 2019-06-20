@@ -185,7 +185,11 @@ function removeTabs() {                                                         
           tabs.forEach(                                                         //For each tab...
             function(tab) {                                                     //Run a function
               if(ctab.index > tab.index){                                       //If the tab comes before the current one
-                chrome.tabs.remove(tab.id);                                     //Remove it
+                setTimeout(                                                     //Wait 100 milliseconds
+                  function() {                                                  //... (function)
+                    chrome.tabs.remove(tab.id);                                 //Remove it
+                  }, 100                                                        //Delay
+                );
               }
             }
           );
@@ -303,7 +307,17 @@ function closePane() {                                                          
        right: '0px'                                                             //Moving the pane to half screen
     }, { duration: 300, queue: false });                                        //Duration, and false queue (for flush animation)
 }                                                                               //CLOSE OUT FUNCTION
-
+function currentTime() {
+  var today = new Date();                                                       //Create a new day
+  var hour = today.getHours();                                                  //Get the current hour
+  if(hour>12){                                                                  //If it is greater then 12
+    hour-=12;                                                                   //Subtract twelve
+  }                                                                             //Close out if statement
+  var minute = today.getMinutes();                                              //Get the current minute
+  hour = toWords(hour);                                                         //Translate hour # to string
+  minute = toWords(minute);                                                     //Translate minute # to string
+  $('#wrapper').html(hour + ' : ' + minute);                                    //Write the time
+}
 //Notes pre-work ---------------------------------------------------------------
 var myList = getArray()                                                         //Create a var for holding notes array
 saveArray(myList);                                                              //Then save it for safekeeping
@@ -319,6 +333,11 @@ $(document).ready(                                                              
     else{                                                                       //If String Lights are off, null, or undefined
       localStorage.setItem(stringLights, 'false');                              //Set the string light state as off
     }                                                                           //Close out else statement
+    setInterval(
+      function() {
+        currentTime();
+      }, 500
+    );
     openPane();
     setInterval(                                                                //Run the following function repeatadly (MAIN BALL CONTROL)
       function () {                                                             //... (Function)
@@ -334,8 +353,9 @@ $(document).ready(                                                              
           y = 0;                                                                //Make it still
           seconds = 0;
         }                                                                       //Close out if statement
-      },1                                                                       //Run this entire function every millisecond
+      },3                                                                       //Run this entire function every millisecond
     );
+
 
 //Color Switches ---------------------------------------------------------------
     $('#switchball').click(                                                     //When you click on ball switch
