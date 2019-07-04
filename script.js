@@ -1,4 +1,4 @@
-//Copyright AJ Simao 2019 Version 1.0
+//Copyright AJ Simao 2019
 
 //Variables --------------------------------------------------------------------
 //Ball Control
@@ -316,11 +316,17 @@ function currentTime() {
   var minute = today.getMinutes();                                              //Get the current minute
   hour = toWords(hour);                                                         //Translate hour # to string
   minute = toWords(minute);                                                     //Translate minute # to string
-  if (['one','two','three','four','five','six','seven','eight','nine'].indexOf(minute) > -1){
-    minute = "O\' " + minute;
-  }
-  $('#wrapper').html(hour + ' : ' + minute);                                    //Write the time
+  if (['one','two','three','four','five','six','seven','eight','nine'].indexOf(minute) > -1){//If the minute is a single digit
+    minute = "O\' " + minute;                                                   //Add the O in front of it
+  }                                                                             //Close out if statement
+  if (minute == 'zero'){                                                        //If the time is on the hour (no minutes)
+    minute = "O\'Clock";                                                        //Make it say 'OClock'
+  }                                                                             //Close out if statement
+  $('#wrapper').html(hour + ' ' + minute);                                      //Write the time
+  console.log(hour + ' ' + minute);                                             //Log it
+
 }
+
 //Notes pre-work ---------------------------------------------------------------
 var myList = getArray()                                                         //Create a var for holding notes array
 saveArray(myList);                                                              //Then save it for safekeeping
@@ -336,10 +342,11 @@ $(document).ready(                                                              
     else{                                                                       //If String Lights are off, null, or undefined
       localStorage.setItem(stringLights, 'false');                              //Set the string light state as off
     }                                                                           //Close out else statement
+    currentTime();
     setInterval(
       function() {
         currentTime();
-      }, 500
+      }, 5000
     );
     openPane();
     setInterval(                                                                //Run the following function repeatadly (MAIN BALL CONTROL)
@@ -907,6 +914,5 @@ $(document).ready(                                                              
         window.location = 'https://www.netflix.com/browse'
       }
     );
-
   }                                                                             //Close out Main Function
 );
