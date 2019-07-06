@@ -7,7 +7,7 @@ var vy = 2;                                                                     
 var ay = -.01;                                                                  //Downward Acceleration
 
 //Modes
-var ballMode = 2;                                                               //Ball mode (Red Blue)
+var ballMode;
 var backMode = 1;                                                               //Back mode (Gray Cream)
 var currentScreen = 1;                                                          //What screen your on
 var gradState = true;                                                           //Gradients are on
@@ -322,10 +322,32 @@ function currentTime() {
   if (minute == 'zero'){                                                        //If the time is on the hour (no minutes)
     minute = "O\'Clock";                                                        //Make it say 'OClock'
   }                                                                             //Close out if statement
+  if (hour == 'zero'){                                                          //If the time is 12 AM (first hour of a new day)
+    hour = 'twelve'                                                             //Change the hour to 'twelve', as it was previously 'zero'
+  }                                                                             //Close out if statement
   $('#wrapper').html(hour + ' ' + minute);                                      //Write the time
-  console.log(hour + ' ' + minute);                                             //Log it
-
 }
+
+function changeBall(colorToChange, addedClass, codeOfButton, speed){            //Function for changing the ball color
+    var speed = speed;                                                          //Copy the speed parameter to a 'speed' var
+    if(speed == 'fast'){                                                        //If it was listed as fast
+      speed = 1;                                                                //Change the speed var to 1 millisecond
+    }                                                                           //Close out if statement
+    else{                                                                       //If it was listed as 'normal', or wasn't listed at all
+      speed = 500;                                                              //Change the speed to 500 milliseconds (default time)
+    }                                                                           //Close out else statement
+    $("#circle").fadeOut(speed);                                                //Hide the ball at the speed listed
+    ballMode = colorToChange;                                                   //Change ballMode to the color you want it to be
+    setTimeout(                                                                 //Wait the speed listed
+      function() {                                                              //... (function)
+        $('#circle').removeClass('gradientB gradientR gradientG');              //Take off any gradient that may be on
+        $("#circle").addClass(addedClass);                                      //Add on the gradient listed
+        $('#switchball').animate({backgroundColor:codeOfButton});               //Animate the button to whatever colorcode listed
+        $('#circle').fadeIn(speed);                                             //Fade the ball back in at whatever speed listed
+      }, speed                                                                  //Delay
+    );
+    localStorage.setItem('ballColor', colorToChange);                           //Locally store the new color of the ball
+  }
 
 //Notes pre-work ---------------------------------------------------------------
 var myList = getArray()                                                         //Create a var for holding notes array
@@ -335,6 +357,20 @@ saveArray(myList);                                                              
 $(document).ready(                                                              //Starts up JQuery
   function() {                                                                  //Main function
 		$('.menutable').children().hide();                                          //Hide the contents of the menus
+    ballMode = localStorage.getItem('ballColor');                               //Grab the last logged ball color
+    if(ballMode == 'red'){                                                      //Check if the ball was red last time
+      changeBall('red','gradientR','#e04422', 'fast');                          //If it was, make it red again
+    }                                                                           //Close out if statement
+    if(ballMode == 'green'){                                                    //Check if the ball was green last time
+      changeBall('green','gradientG','#81c000', 'fast');                        //If it was, make it green again
+    }                                                                           //Close out if statement
+    if(ballMode == 'blue'){                                                     //Check if the ball was blue last time
+      changeBall('blue','gradientB','#22bee0', 'fast');                         //If it was, make it blue again
+    }                                                                           //Close out if statement
+    if(localStorage.getItem('ballColor') == null){                              //If for whatever reason there is no logged last ball color
+      console.log('NO VALUE EXISTS MAKING BALL DEFAULT BLUE');                  //Log it for debug purposes
+      changeBall('blue','gradientB','#22bee0', 'fast');                         //Make the ball blue (default color)
+    }                                                                           //Close out if statement
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -342,13 +378,13 @@ $(document).ready(                                                              
     else{                                                                       //If String Lights are off, null, or undefined
       localStorage.setItem(stringLights, 'false');                              //Set the string light state as off
     }                                                                           //Close out else statement
-    currentTime();
-    setInterval(
-      function() {
-        currentTime();
-      }, 5000
+    currentTime();                                                              //Grab the current time
+    setInterval(                                                                //Then after every 10 seconds
+      function() {                                                              //... (function)
+        currentTime();                                                          //Grab the current time
+      }, 10000                                                                  //...  every 10 seconds
     );
-    openPane();
+    openPane();                                                                 //Open the panes
     setInterval(                                                                //Run the following function repeatadly (MAIN BALL CONTROL)
       function () {                                                             //... (Function)
         $('#circle').css({bottom:y});                                           //Change the bottom for Y pos
@@ -366,40 +402,26 @@ $(document).ready(                                                              
       },3                                                                       //Run this entire function every millisecond
     );
 
-
 //Color Switches ---------------------------------------------------------------
-    $('#switchball').click(                                                     //When you click on ball switch
-      function() {                                                              //... (function)
-        ballMode = ballMode + 1;                                                //Change ballMode EVEN IS BLUE / ODD IS RED
-        if(ballMode % 2 == 0 && gradState == false){                            //If ballMode is even
-          $('#circle').animate({backgroundColor:'#22bee0'});                    //Make ball blue
-          $(this).animate({backgroundColor:'#22bee0'});                         //Make ball switch blue
-        }                                                                       //Close out if statement
-        if(ballMode % 2 == 0 && gradState == true){                             //If ballMode is even and gradient is on
-          $('#circle').fadeOut(500);                                            //Hide the circle
-          setTimeout(                                                           //Wait 500 milliseconds
-            function() {                                                        //... (function)
-              $('#circle').removeClass('gradientR');                            //Take off red gradient
-              $('#circle').addClass('gradientB')                                //Put on blue gradient
-              $('#circle').fadeIn(500);                                         //Bring circle back
-              $('#switchball').animate({backgroundColor:'#22bee0'});            //Make ball switch blue
-            }, 500);                                                            //Delay
-        }                                                                       //Close out if statement
-        if(ballMode % 2 == 1 && gradState == false){                            //If ballMode is odd
-          $('#circle').animate({backgroundColor:'#e04422'});                    //Make ball red
-          $(this).animate({backgroundColor:'#e04422'});                         //Make ball switch red
-        }                                                                       //Close out if statement
-        if(ballMode % 2 == 1 && gradState == true){                             //If ballmode is odd and gradient is on
-          $('#circle').fadeOut(500);                                            //Hide the circle
-          setTimeout(                                                           //Wait 500 milliseconds
-            function() {                                                        //... (function)
-              $('#circle').removeClass('gradientB');                            //Take off Blue gradient
-              $('#circle').addClass('gradientR')                                //Put on red gradient
-              $('#circle').fadeIn(500);                                         //Bring circle back
-              $('#switchball').animate({backgroundColor:'#e04422'});            //Make ball switch blue
-            }, 500);                                                            //Delay
-        }                                                                       //Close out if statement
-      }                                                                         //CLOSE OUT FUNCTION
+    $('#switchball').click(
+      function() {
+        if(ballMode == 'red'){
+          changeBall('green','gradientG','#81c000', 'normal');
+          console.log('Changing ballmode to green');
+        }
+        else{
+          if(ballMode == 'green'){
+            changeBall('blue','gradientB','#22bee0', 'normal');
+            console.log('Changing ballmode to blue');
+          }
+          else{
+            if(ballMode == 'blue'){
+              changeBall('red','gradientR','#e04422', 'normal');
+              console.log('Changing ballmode to red');
+            }
+          }
+        }
+      }
     );
     $('#switchback').click(                                                     //When you click on back switch
       function() {                                                              //... (function)
@@ -409,12 +431,14 @@ $(document).ready(                                                              
           $(this).animate({backgroundColor:'#333333'});                         //Darken button
           $('#counter').animate({color:'#333333'});                             //Darken counter
           $('.corner').animate({borderColor:'#333333'});                        //Darken corner
+          $("#wrapper").animate({color: 'rgba(1, 1, 1, 0.05)'});                //Darken clock
         }                                                                       //Close out if statement
         else{                                                                   //If backMode is odd (else)
           $('body,#wrapper').animate({backgroundColor:'#333333'});              //Darken background
           $(this).animate({backgroundColor:'#fffaf4'});                         //Brighten button
-          $('#counter').animate({color:'#fffaf4'});                             //Darken counter
-          $('.corner').animate({borderColor:'#fffaf4'});                        //Darken corner
+          $('#counter').animate({color:'#fffaf4'});                             //Brighten counter
+          $('.corner').animate({borderColor:'#fffaf4'});                        //Brighten corner
+          $("#wrapper").animate({color: 'rgba(255, 255, 255, 0.05)'});          //Brighten clock
         }                                                                       //Close out else statement
       }                                                                         //CLOSE OUT FUNCTION
     );
@@ -429,11 +453,6 @@ $(document).ready(                                                              
         $(this).animate({                                                       //Animate it to...
           bottom: '10px'                                                        //Go back down 5 px
         },150);                                                                 //In 150 milliseconds
-      }                                                                         //CLOSE OUT FUNCTION
-    );
-    $('#circle').click(                                                         //When you click on the circle
-      function() {                                                              //... (function)
-        changeGradient();                                                       //Click uses function (changeGradient)
       }                                                                         //CLOSE OUT FUNCTION
     );
     $('#counter').click(                                                        //When you click on the height counter
@@ -472,7 +491,7 @@ $(document).ready(                                                              
         $('#circle').fadeOut(500);
         setTimeout(
           function() {
-            $('#circle').removeClass('gradientB gradientR');
+            $('#circle').removeClass('gradientB gradientR gradientG');
             $('#circle').fadeIn(500);
           }, 500
         );
@@ -496,7 +515,7 @@ $(document).ready(                                                              
         $('#circle').fadeOut(500);
         setTimeout(
           function() {
-            $('#circle').removeClass('gradientB gradientR');
+            $('#circle').removeClass('gradientB gradientR gradientG');
             $('#circle').fadeIn(500);
           }, 500
         );
