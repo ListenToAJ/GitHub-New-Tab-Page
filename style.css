@@ -44,7 +44,20 @@ body {
 }
 
 .gradientG {
-  background: linear-gradient(180deg, rgba(247,252,0,1) 0%, rgba(1,127,1,1) 100%) !important;
+  /* background: linear-gradient(180deg, rgba(247,252,0,1) 0%, rgba(1,127,1,1) 100%) !important; */
+  background: linear-gradient(180deg, #9ebd13 0%, #008552 100%) !important;
+}
+
+.gradientBlueGreen {
+  background: linear-gradient(0deg, #00C9FF 0%, #92FE9D 100%) !important;
+}
+
+.gradientOceanBlue {
+  background: linear-gradient(180deg, #1CB5E0 0%, #000851 100%) !important;
+}
+
+.gradientLilly {
+  background: linear-gradient(180deg, #efd5ff 0%, #515ada 100%) !important;
 }
 
 

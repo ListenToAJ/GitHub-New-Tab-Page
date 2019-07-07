@@ -10,21 +10,16 @@ var ay = -.01;                                                                  
 var ballMode;
 var backMode = 1;                                                               //Back mode (Gray Cream)
 var currentScreen = 1;                                                          //What screen your on
-var gradState = true;                                                           //Gradients are on
 
 //Numbers to hold
 var n;                                                                          //PX to number
 var w = window.innerWidth;                                                      //Width of current window
 var h = window.innerHeight;                                                     //Height of current window
 
-//Menus (Right/Left)
-var rightMenu = false;                                                          //Right trigger is hidden
-var leftMenu = false;                                                           //Left trigger is hidden
-var propState = false;                                                          //Prop game is not on
-
 //Misc.
 var typedString;                                                                //String to hold search bar contents
 var highScore;                                                                  //Var to hold current high score
+var propState = false;                                                          //Prop game is not on
 
 //Functions --------------------------------------------------------------------
 var ballup = function (){                                                       //Function for ballup (for click/hover)
@@ -44,8 +39,7 @@ function PXtoNumber (s) {                                                       
   return n.toFixed(0);                                                          //Return and rounding
 }                                                                               //CLOSE OUT FUNCTION
 function clearSearch() {                                                        //Function for clearing search bar
-  $('input').val('');                                                           //Sets value to 0
-  $('input').blur();                                                            //Unfocuses search bar
+  $('input').val('').blur();                                                    //Clear search bar and then unfocuses search bar
 }                                                                               //CLOSE OUT FUNCTION
 function closeHelp() {                                                          //Function for closing help menu
   $('.menutable').children().fadeOut(150);                                      //Fade out the contents of a help menu
@@ -82,33 +76,6 @@ function GetWindowDims() {                                                      
   w = window.innerWidth;                                                        //Width of current window
   h = window.innerHeight;                                                       //Height of current window
   console.log('Width is', w, 'Height is', h);                                   //Log the new height and width
-}                                                                               //CLOSE OUT FUNCTION
-function changeGradient() {                                                     //Function for changing to gradient mode
-  if(gradState == false){                                                       //If gradient mode is off
-    $('#circle').fadeOut(500);                                                  //Fade out the circle
-    setTimeout(                                                                 //Wait 500 milliseconds
-      function() {                                                              //... (function)
-        if(ballMode % 2 == 0){                                                  //If the ball is blue
-          $('#circle').addClass('gradientB');                                   //Add the blue gradient
-        }                                                                       //Close out if statement
-        else{                                                                   //If the ball is red (else)
-          $('#circle').addClass('gradientR');                                   //Add the red gradient
-        }                                                                       //Close out else statement
-        $('#circle').fadeIn(500);                                               //Fade the circle back in
-        gradState = true;                                                       //Turn gradient mode on (var)
-      }, 500                                                                    //Delay
-    );
-  }                                                                             //Close out if statement
-  else{                                                                         //If gradient mode is on
-    $('#circle').fadeOut(500);                                                  //Fade out the circle
-    setTimeout(                                                                 //Wait 500 milliseconds
-      function() {                                                              //... (function)
-        $('#circle').removeClass('gradientB gradientR');                        //Remove any gradients
-        $('#circle').fadeIn(500);                                               //Fade the circle back in
-        gradState = false;                                                      //Turn gradient mode off (var)
-      }, 500                                                                    //Delay
-    );
-  }                                                                             //Close out else statement
 }                                                                               //CLOSE OUT FUNCTION
 function startTimer() {                                                         //Function for starting ball timer
   var seconds = 0;                                                              //Start a var for time
@@ -174,7 +141,7 @@ function saveArray(arr) {                                                       
   localStorage.setItem('myArray', JSON.stringify(arr))                          //Stringify and then save all notes
 }                                                                               //CLOSE OUT FUNCTION
 function freeze() {                                                             //Function for freezing browser
-  while(1){}
+  while(1){}                                                                    //Freeze it!
 }                                                                               //CLOSE OUT FUNCTION
 function removeTabs() {                                                         //Function for removing tabs
   chrome.tabs.getCurrent(                                                       //Hey chrome get me a list of tabs
@@ -188,7 +155,7 @@ function removeTabs() {                                                         
                 setTimeout(                                                     //Wait 100 milliseconds
                   function() {                                                  //... (function)
                     chrome.tabs.remove(tab.id);                                 //Remove it
-                  }, 100                                                        //Delay
+                  }, 300                                                        //Delay
                 );
               }
             }
@@ -307,7 +274,7 @@ function closePane() {                                                          
        right: '0px'                                                             //Moving the pane to half screen
     }, { duration: 300, queue: false });                                        //Duration, and false queue (for flush animation)
 }                                                                               //CLOSE OUT FUNCTION
-function currentTime() {
+function currentTime() {                                                        //Function for grabbing and writing the time
   var today = new Date();                                                       //Create a new day
   var hour = today.getHours();                                                  //Get the current hour
   if(hour>12){                                                                  //If it is greater then 12
@@ -326,28 +293,25 @@ function currentTime() {
     hour = 'twelve'                                                             //Change the hour to 'twelve', as it was previously 'zero'
   }                                                                             //Close out if statement
   $('#wrapper').html(hour + ' ' + minute);                                      //Write the time
-}
-
-function changeBall(colorToChange, addedClass, codeOfButton, speed){            //Function for changing the ball color
-    var speed = speed;                                                          //Copy the speed parameter to a 'speed' var
-    if(speed == 'fast'){                                                        //If it was listed as fast
-      speed = 1;                                                                //Change the speed var to 1 millisecond
-    }                                                                           //Close out if statement
-    else{                                                                       //If it was listed as 'normal', or wasn't listed at all
-      speed = 500;                                                              //Change the speed to 500 milliseconds (default time)
-    }                                                                           //Close out else statement
-    $("#circle").fadeOut(speed);                                                //Hide the ball at the speed listed
-    ballMode = colorToChange;                                                   //Change ballMode to the color you want it to be
-    setTimeout(                                                                 //Wait the speed listed
-      function() {                                                              //... (function)
-        $('#circle').removeClass('gradientB gradientR gradientG');              //Take off any gradient that may be on
-        $("#circle").addClass(addedClass);                                      //Add on the gradient listed
-        $('#switchball').animate({backgroundColor:codeOfButton});               //Animate the button to whatever colorcode listed
-        $('#circle').fadeIn(speed);                                             //Fade the ball back in at whatever speed listed
-      }, speed                                                                  //Delay
-    );
-    localStorage.setItem('ballColor', colorToChange);                           //Locally store the new color of the ball
-  }
+}                                                                               //CLOSE OUT FUNCITON
+function changeBall(colorToChange, addedClass, buttonColorCode, speed){         //Function for changing the ball color
+  if(speed == 'fast'){                                                          //If it was listed as fast
+    speed = 1;                                                                  //Change the speed var to 1 millisecond
+  }                                                                             //Close out if statement
+  else{                                                                         //If it was listed as 'normal', or wasn't listed at all
+    speed = 500;                                                                //Change the speed to 500 milliseconds (default time)
+  }                                                                             //Close out else statement
+  $("#circle").fadeOut(speed);                                                  //Hide the ball at the speed listed
+  ballMode = colorToChange;                                                     //Change ballMode to the color you want it to be
+  setTimeout(                                                                   //Wait the speed listed
+    function() {                                                                //... (function)
+      $('#circle').removeClass().addClass(addedClass);                          //Take off any gradient that may be on then apply the new one
+      $('#switchball').animate({backgroundColor:buttonColorCode});              //Animate the button to whatever colorcode listed
+      $('#circle').fadeIn(speed);                                               //Fade the ball back in at whatever speed listed
+    }, speed                                                                    //Delay
+  );
+  localStorage.setItem('ballColor', colorToChange);                             //Locally store the new color of the ball
+}                                                                               //CLOSE OUT FUNCTION
 
 //Notes pre-work ---------------------------------------------------------------
 var myList = getArray()                                                         //Create a var for holding notes array
@@ -358,19 +322,26 @@ $(document).ready(                                                              
   function() {                                                                  //Main function
 		$('.menutable').children().hide();                                          //Hide the contents of the menus
     ballMode = localStorage.getItem('ballColor');                               //Grab the last logged ball color
-    if(ballMode == 'red'){                                                      //Check if the ball was red last time
-      changeBall('red','gradientR','#e04422', 'fast');                          //If it was, make it red again
-    }                                                                           //Close out if statement
-    if(ballMode == 'green'){                                                    //Check if the ball was green last time
-      changeBall('green','gradientG','#81c000', 'fast');                        //If it was, make it green again
-    }                                                                           //Close out if statement
-    if(ballMode == 'blue'){                                                     //Check if the ball was blue last time
-      changeBall('blue','gradientB','#22bee0', 'fast');                         //If it was, make it blue again
-    }                                                                           //Close out if statement
-    if(localStorage.getItem('ballColor') == null){                              //If for whatever reason there is no logged last ball color
-      console.log('NO VALUE EXISTS MAKING BALL DEFAULT BLUE');                  //Log it for debug purposes
-      changeBall('blue','gradientB','#22bee0', 'fast');                         //Make the ball blue (default color)
-    }                                                                           //Close out if statement
+    switch(ballMode){                                                           //With that last logged ball color
+      case "red":                                                               //Check if it was red
+        changeBall('red','gradientR','#e04422', 'fast');                        //Restore the color
+      break;                                                                    //Break out of the switch
+      case "green":                                                             //Check if it was green
+        changeBall('green','gradientG','#81c000', 'fast');                      //Restore the color
+      break;                                                                    //Break out of the switch
+      case "blue":                                                              //Check if it was blue
+        changeBall('blue','gradientB','#22bee0', 'fast');                       //Restore the color
+      break;                                                                    //Break out of the switch
+      case"bluegreen":                                                          //Check if it was bluegreen
+        changeBall('bluegreen','gradientBlueGreen','#48e4ce', 'fast');          //Restore the color
+      break;                                                                    //Break out of the switch
+      case"oceanblue":                                                          //Check if it was oceanblue
+        changeBall('oceanblue','gradientOceanBlue','#0e649d', 'fast');          //Restore the color
+      break;                                                                    //Break out of the switch
+      case"lilly":                                                              //Check if it was lilly
+        changeBall('lilly','gradientLilly','#a198eb', 'fast');                  //Restore the color
+      break;                                                                    //Break out of the switch
+    }                                                                           //Close out switch statement
     if(localStorage.getItem(stringLights) == 'true'){                           //If String Lights are on
       $('#stringLights').show();                                                //Show the lights
       localStorage.setItem(stringLights, 'true');                               //Set the string lights state as on
@@ -403,25 +374,27 @@ $(document).ready(                                                              
     );
 
 //Color Switches ---------------------------------------------------------------
-    $('#switchball').click(
-      function() {
-        if(ballMode == 'red'){
-          changeBall('green','gradientG','#81c000', 'normal');
-          console.log('Changing ballmode to green');
-        }
-        else{
-          if(ballMode == 'green'){
-            changeBall('blue','gradientB','#22bee0', 'normal');
+    $('#switchball').click(                                                     //When you click on the ball switch button
+      function() {                                                              //... (function)
+        switch(ballMode){                                                       //Grab the ballMode var to compare against
+          case "red":                                                           //If the ball is red
+            changeBall('green','gradientG','#81c000', 'normal');                //Change it to green
+            console.log('Changing ballmode to green');
+          break;                                                                //Break out of the switch
+          case "green":                                                         //If the ball is green
+            changeBall('blue','gradientB','#22bee0', 'normal');                 //Change it to blue
             console.log('Changing ballmode to blue');
-          }
-          else{
-            if(ballMode == 'blue'){
-              changeBall('red','gradientR','#e04422', 'normal');
-              console.log('Changing ballmode to red');
-            }
-          }
-        }
-      }
+          break;                                                                //Break out of the switch
+          case "blue":                                                          //If the ball is blue
+            changeBall('red','gradientR','#e04422', 'normal');                  //Change it to red
+            console.log('Changing ballmode to red');
+          break;                                                                //Break out of the switch
+          default:                                                              //If the color isn't one of the main 3
+            changeBall('blue','gradientB','#22bee0', 'normal');                 //Change it to blue (default)
+            console.log('No preset value, changing ballMode to blue');
+          break;                                                                //Break out of the switch
+        }                                                                       //Close out switch statement
+      }                                                                         //CLOSE OUT FUNCTION
     );
     $('#switchback').click(                                                     //When you click on back switch
       function() {                                                              //... (function)
@@ -491,13 +464,29 @@ $(document).ready(                                                              
         $('#circle').fadeOut(500);
         setTimeout(
           function() {
-            $('#circle').removeClass('gradientB gradientR gradientG');
+            $('#circle').removeClass().css({background:'#e72763'});
+            $('#switchball').animate({
+                backgroundColor: '#e72763'
+              }, 500);
             $('#circle').fadeIn(500);
           }, 500
         );
         setInterval(
           function() {
             $('#circle').animate({
+                backgroundColor: '#e72763'
+              }, 500)
+              .animate({
+                backgroundColor: '#a0da00'
+              }, 500)
+              .animate({
+                backgroundColor: '#00a0da'
+              }, 500);
+          }, 1000
+        );
+        setInterval(
+          function() {
+            $('#switchball').animate({
                 backgroundColor: '#e72763'
               }, 500)
               .animate({
@@ -515,8 +504,7 @@ $(document).ready(                                                              
         $('#circle').fadeOut(500);
         setTimeout(
           function() {
-            $('#circle').removeClass('gradientB gradientR gradientG');
-            $('#circle').fadeIn(500);
+            $('#circle').removeClass().css({background:'#e72763'}).fadeIn(500);
           }, 500
         );
         $('input, #switchball, #switchback, .corner, #stringLights').fadeOut(500);
@@ -545,7 +533,7 @@ $(document).ready(                                                              
       if (typedString == 'byesearch') {
         $('Input').fadeOut(500);
       }
-      //Code load      Event: Show loading screen                          Chec
+      //Code load      Event: Show loading screen                           Chec
       if (typedString == 'load') {
         screenChange('#screentwo');
         currentScreen = 2;
@@ -693,7 +681,7 @@ $(document).ready(                                                              
         );
         clearSearch();
       }
-      //Code: pkg       Event: Open package tracker
+      //Code: pkg       Event: Open package tracker                         Chec
       if(typedString == 'pkg') {
         $('#pkg').css({display: 'block'});
         $('#search').animate(
@@ -714,7 +702,22 @@ $(document).ready(                                                              
           );
         }, 250);
       }
-    }
+      //Code: grd-bg     Event: Activate blue green gradient                Chec
+      if(typedString == 'grd-bg') {
+        changeBall('bluegreen','gradientBlueGreen','#48e4ce', 'normal');
+        clearSearch();
+      }
+      //Code: grd-ob     Event: Activate ocean blue gradient                Chec
+      if(typedString == 'grd-ob') {
+        changeBall('oceanblue','gradientOceanBlue','#0e649d', 'normal');
+        clearSearch();
+      }
+      //Code: grd-l     Event: Activate Lilly gradient                      Chec
+      if(typedString == 'grd-l') {
+        changeBall('lilly','gradientLilly','#a198eb', 'normal');
+        clearSearch();
+      }
+    }                                                                           //CLOSE OUT FUNCTION
 
 //Secret Code running ----------------------------------------------------------
     $('#search').keyup(                                                         //When you type in the search bar
@@ -742,6 +745,11 @@ $(document).ready(                                                              
         closeHelp();                                                            //Close the help menu
         secretCode();                                                           //Check for any codewords
       }                                                                         //CLOSE OUT FUNCTION
+    );
+    $('#circle').click(                                                         //When you click on the ball
+	    function() {                                                              //... (function)
+		    $('#search').val('grd-').focus();                                       //Write the gradient change and then focus it
+	    }                                                                         //CLOSE OUT FUNCTION
     );
 
 //Keyboard Shortcuts -----------------------------------------------------------
