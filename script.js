@@ -54,15 +54,7 @@ function closeHelp() {                                                          
       );
     }, 150                                                                      //Delay
   );
-}                                                                               //Close out function
-function closeQuick() {                                                         //Function for closing quick menu
-  $('#quickMenu').fadeOut(250);                                                 //Hide the quick menu
-  setTimeout(                                                                   //Wait until quick menu is gone
-    function() {                                                                //... (function)
-      blurOff();                                                                //Unblur the background
-    }, 250                                                                      //Delay (500)
-  );
-}                                                                               //Close out function
+}                                                                               //Close out function                                                                               //Close out function
 function screenChange(s) {//Input: screenChange('#screennumber');               //Function for screen change
   closePane();                                                                  //Cloes the panes (Covering screen)
   setTimeout(                                                                   //Wait until the panes are closed
@@ -697,16 +689,6 @@ setTimeout(                                                                     
             );
             clearSearch();
           }
-      //Code: >         Event: Open quick menu                              Chec
-          if(typedString == '>') {
-            blurOn();                                                           //Blur the background
-            setTimeout(                                                         //Wait until background is blurred
-              function() {                                                      //... (function)
-                $('#quickMenu').fadeIn(250);                                    //Show the quick menu
-              }, 250                                                            //Delay (500)
-            );
-            clearSearch();
-          }
       //Code: pkg       Event: Open package tracker                         Chec
           if(typedString == 'pkg') {
             $('#pkg').css({display: 'block'});
@@ -830,7 +812,6 @@ setTimeout(                                                                     
           function(e) {                                                         //... (function)
             if (e.key === 'Escape') {                                           //If the key you pressed is escape...
               closeHelp();                                                      //Fade out the help menu
-              closeQuick();                                                     //Close quick menu
             }                                                                   //Close out if statement                                                                 //Close out if statement
           }                                                                     //Close out function
         );
@@ -861,7 +842,7 @@ setTimeout(                                                                     
         );
 
 //Hot Corners ------------------------------------------------------------------
-        $('.corner').mouseover(                                                 //When you mouse over a hot corner...
+        $('.corner').click(                                                     //When you click a a hot corner...
           function() {                                                          //... (function)
             lastClosed();                                                       //Open the last closed website
           }                                                                     //Close out function
@@ -952,68 +933,8 @@ setTimeout(                                                                     
           }                                                                     //Close out function
         });                                                                     //Close out Vue
 
-//Quick Menu  ------------------------------------------------------------------
-        $('#search').dblclick(                                                  //When you double click on the search bar
-          function() {                                                          //... (function)
-            blurOn();                                                           //Blur the background
-            setTimeout(                                                         //Wait until background is blurred
-              function() {                                                      //... (function)
-                $('#quickMenu').fadeIn(250);                                    //Show the quick menu
-              }, 250                                                            //Delay (500)
-            );
-          }                                                                     //Close out function
-        );
-        $('#quickMenuCloser').click(                                            //When you click outside of the quick menu
-          function() {                                                          //... (function)
-            $('input').focus();                                                 //Focus on the search bar
-            closeQuick();                                                       //Close the quick menu
-          }                                                                     //Close out function
-        );
-        $('#quickIcon1').click(                                                 //Quick icon link #1
-          function() {                                                          //... (function)
-            window.location = 'https://amazon.com/'                             //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon2').click(                                                 //Quick icon link #2
-          function() {                                                          //... (function)
-            window.location = 'https://www.santanderbank.com/us/personal'       //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon3').click(                                                 //Quick icon link #3
-          function() {                                                          //... (function)
-            window.location = 'https://ma-innovation.myfollett.com/aspen/logon.do'  //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon4').click(                                                 //Quick icon link #4
-          function() {                                                          //... (function)
-            window.location = 'https://repl.it/repls'                           //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon5').click(                                                 //Quick icon link #5
-          function() {                                                          //... (function)
-            window.location = 'https://github.com/'                             //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon6').click(                                                 //Quick icon link #6
-          function() {                                                          //... (function)
-            window.location = 'https://outlook.office.com/mail/inbox'           //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon7').click(                                                 //Quick icon link #7
-          function() {                                                          //... (function)
-            window.location = 'https://www.youtube.com/'                        //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon8').click(                                                 //Quick icon link #8
-          function() {                                                          //... (function)
-            window.location = 'https://drive.google.com/drive/u/0/my-drive'     //Redirection
-          }                                                                     //Close out function
-        );
-        $('#quickIcon9').click(                                                 //Quick icon link #9
-          function() {                                                          //... (function)
-            window.location = 'https://www.netflix.com/browse'                  //Redirection
-          }                                                                     //Close out function
-        );
+//Search Animations  ------------------------------------------------------------------
+
         $('#search').hover(
           function() {
             $('#search').animate({'width':'35%'},350);
