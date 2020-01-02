@@ -20,10 +20,11 @@ var h = window.innerHeight;                                                     
 var typedString;                                                                //String to hold search bar contents
 var highScore;                                                                  //Var to hold current high score
 var propState = false;                                                          //Prop game is not on
+var searchFocus = false;                                                        //Search bar is unfocused
 
 //Functions --------------------------------------------------------------------
 var ballup = function (){                                                       //Function for ballup (for click/hover)
-  vy += 1.3;                                                                    //Increase Velocity
+  vy += 2;                                                                    //Increase Velocity
   ay = -.01;                                                                    //Reset Downward Acceleration
   $('#counter').fadeIn(500);                                                    //Counter fade in for cleanliness
   $('.rightbutton').fadeOut(500);                                               //Fade out the buttons on the right side
@@ -218,12 +219,12 @@ function testTabs() {                                                           
   removeTabs();                                                                 //Close all previous tabs
   setTimeout(                                                                   //Wait half a second
     function() {                                                                //... (function)
-      window.open('https:  //www.google.com/');                                 //Open a test tab
-      window.open('https:  //www.amazon.com/');                                 //Open a test tab
-      window.open('https:  //www.innovationcharter.org/');                      //Open a test tab
-      window.open('https:  //repl.it/repls');                                   //Open a test tab
-      window.open('https:  //github.com/');                                     //Open a test tab
-      window.open('https:  //drive.google.com/drive/u/0/my-drive');             //Open a test tab
+      window.open('https:www.google.com/');                                 //Open a test tab
+      window.open('https:www.amazon.com/');                                 //Open a test tab
+      window.open('https:www.innovationcharter.org/');                      //Open a test tab
+      window.open('https:repl.it/repls');                                   //Open a test tab
+      window.open('https:github.com/');                                     //Open a test tab
+      window.open('https:drive.google.com/drive/u/0/my-drive');             //Open a test tab
       chrome.tabs.create({});                                                   //Make a new tab
       chrome.tabs.getCurrent(                                                   //Hey chrome get me a list of tabs
         function (ctab){                                                        //When you got it...
@@ -571,7 +572,9 @@ setTimeout(                                                                     
             $('#search').animate(
               {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
               function() {
+                clearSearch();
                 $('#search').css({'box-shadow': 'none'});
+                $('#search').css({'display': 'none'});
                 $('#debug').css({'box-shadow': '1px 14px 65px 8px rgba(0, 0, 0, 0.54)', border: '1px solid #474747'});
               }
             );
@@ -630,7 +633,7 @@ setTimeout(                                                                     
           if (typedString == 'mosh') {
             window.location = 'https://codewithmosh.com/courses/enrolled/324741'
           }
-      //Code: shortket  Event: Open new tab shortcuts                       Chec
+      //Code: shortkey  Event: Open new tab shortcuts                       Chec
           if (typedString == 'shortkey') {
             $('#chromeshortcuts').animate({
               width: '90%'},350);
@@ -710,7 +713,9 @@ setTimeout(                                                                     
             $('#search').animate(
               {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
               function() {
+                clearSearch();
                 $('#search').css({'box-shadow': 'none'});
+                $('#search').css({'display': 'none'});
                 $('#pkg').css({'box-shadow': '1px 14px 65px 8px rgba(0, 0, 0, 0.54)', border: '1px solid #474747'});
               }
             );
@@ -740,7 +745,52 @@ setTimeout(                                                                     
             changeBall('lilly','gradientLilly','#a198eb', 'normal');
             clearSearch();
           }
-        }                                                                       //Close out function
+      //Code: mcc       Event: Open MCC Website                             Chec
+          if (typedString == 'mcc') {
+            window.location = 'https://www.middlesex.mass.edu/'
+          }
+      //Code: mymcc       Event: Open MyMCC Website                         Chec
+          if (typedString == 'mymcc') {
+            window.location = 'https://auth.middlesex.mass.edu/adfs/ls?wa=wsignin1.0&wtrealm=urn%3asharepoint%3a2016&wctx=https%3a%2f%2fmymcc.middlesex.mass.edu%2f_layouts%2f15%2fAuthenticate.aspx%3fSource%3d%252F&wreply=https%3a%2f%2fmymcc.middlesex.mass.edu%2f_trust%2fdefault.aspx'
+          }
+      //Code: blkb        Event: Open Blackboard                            Chec
+          if (typedString == 'blkb') {
+            window.location = 'https://blackboard.middlesex.mass.edu/webapps/login/'
+          }
+      //Code: div         Event: Rename tab for dividing                    Chec
+          if(typedString == 'div') {
+            $('#divider').css({display: 'block'});
+            $('#search').animate(
+              {width: '0px',border: '0px',padding: '0px', 'box-shadow': '0px 0px 0px 0px rgba(0, 0, 0, 0.54)'},350,
+              function() {
+                clearSearch();
+                $('#search').css({'box-shadow': 'none'});
+                $('#search').css({'display': 'none'});
+                $('#divider').css({'box-shadow': '1px 14px 65px 8px rgba(0, 0, 0, 0.54)', border: '1px solid #474747'});
+              }
+            );
+            $('#counter, #timer').fadeOut(250);
+            setTimeout(function() {
+              $('#counter, #timer').remove();
+              $('#divider').animate(
+                {width: '37.5%','padding-left': '40px'}, 350,
+                  function() {
+                    $('#divider').focus();
+                  }
+              );
+            }, 250);
+          }
+          if(typedString == 'lofi'){
+              $('#game').html("<iframe id='lofi' width='560' height='315' src='https://www.youtube.com/embed/hHW1oY26kxQ?controls=0' frameborder='0' allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture' allowfullscreen></iframe>");
+              setTimeout(
+              function() {
+                $('#lofi').fadeIn(500);
+                clearSearch();
+                document.title = "Lofi Beats";
+              }, 200
+            );
+          }
+        }                                                                           //Close out function
 
 //Secret Code running ----------------------------------------------------------
         $('#search').keyup(                                                     //When you type in the search bar
@@ -946,7 +996,7 @@ setTimeout(                                                                     
         );
         $('#quickIcon6').click(                                                 //Quick icon link #6
           function() {                                                          //... (function)
-            window.location = 'https://mail.google.com/mail/u/0/'               //Redirection
+            window.location = 'https://outlook.office.com/mail/inbox'           //Redirection
           }                                                                     //Close out function
         );
         $('#quickIcon7').click(                                                 //Quick icon link #7
@@ -962,6 +1012,37 @@ setTimeout(                                                                     
         $('#quickIcon9').click(                                                 //Quick icon link #9
           function() {                                                          //... (function)
             window.location = 'https://www.netflix.com/browse'                  //Redirection
+          }                                                                     //Close out function
+        );
+        $('#search').hover(
+          function() {
+            $('#search').animate({'width':'35%'},350);
+          },
+          function() {
+            if(searchFocus == false){
+              $('#search').stop(true).animate({'width':'15%'},350);
+            }
+          }
+        ).focus(
+          function() {
+            searchFocus = true;
+            $('#search').animate({'width':'35%'},350);
+          }
+        ).blur(
+          function() {
+            searchFocus = false;
+            $('#search').stop(true).animate({'width':'15%'},350);
+          }
+        );
+
+//Divider Menu  ----------------------------------------------------------------
+        $('#divider').keyup(                                                    //When you type in the debug menu
+          function(e) {                                                         //... (function)
+            var divideString = $(this).val();                                   //Store typed text to debugString var
+            if(e.keyCode == 13){                                                //If you click enter
+              document.title = divideString;                                    //Run the typed string as code
+                clearSearch();                                                  //Clear all inputs
+            }                                                                   //Close out if statement
           }                                                                     //Close out function
         );
       }                                                                         //Close out Main Function
